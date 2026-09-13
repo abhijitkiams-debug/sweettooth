@@ -74,6 +74,47 @@ src/components/               ZeroSpikeScoreCard · GlucoseSpikeVisualizer · Ge
                               ProductCard/Grid · AffiliateBuyBox · TransferBridgeModal · reviews · video
 ```
 
+## Admin — product management & category mapping
+
+Add and manage products at **`/admin`** (also linked in the footer):
+
+- **`/admin/products`** — the full catalogue: edit, delete, or view any product.
+- **`/admin/products/new`** — add a product. Paste the ingredient label and the
+  curation engine scores it **live** as you type; the score/tier is **finalised
+  server-side on save** (a client can't fake a "safe" score — hard-fail
+  ingredients always disqualify). Set category, affiliate links (all 4 tiers),
+  images and optional SEO/GEO copy (auto-generated if left blank).
+- **`/admin/categories`** — the **category → directory-page mapping**: every
+  category, its product/tier counts, and which `/low-gi/*` and
+  `/diabetic-friendly/*` pages surface it. Assign a product's category on its
+  edit form; add new craving/sweet-type pages in `src/data/taxonomy.ts`.
+
+**Persistence:** with `DATABASE_URL` set, writes go to Postgres and persist.
+Without it, writes update an in-process store — great for demos, but they reset
+when the server restarts.
+
+**Security:** admin write endpoints are **open by default** for frictionless
+local use. Set `ADMIN_TOKEN` to require an `x-admin-token` header (or
+`admin_token` cookie) on create/update/delete — **do this before deploying
+publicly.**
+
+API (used by the UI, also scriptable):
+
+```bash
+# create — server recomputes the score
+curl -X POST localhost:3000/api/admin/products \
+  -H 'content-type: application/json' \
+  -d '{"title":"Fudgy Allulose Brownie","brand":"KetoKrave",
+       "rawIngredients":"Almond flour, allulose, cocoa, monk fruit",
+       "categorySlug":"cookies",
+       "affiliateLinks":[{"integrationType":"AMAZON_TAG",
+         "targetUrl":"https://www.amazon.in/dp/B0X","priceINR":320,"mrpINR":400,"isPrimary":true}]}'
+# list / update / delete
+curl localhost:3000/api/admin/products
+curl -X PUT    localhost:3000/api/admin/products/<id> -H 'content-type: application/json' -d '{...}'
+curl -X DELETE localhost:3000/api/admin/products/<id>
+```
+
 ## Curation scoring (PRD §3)
 
 ```

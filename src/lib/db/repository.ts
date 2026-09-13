@@ -1,5 +1,5 @@
 import { prisma } from "./prisma";
-import { SEED_PRODUCTS } from "@/data/seed-products";
+import { memoryStore } from "./store";
 import { CRAVINGS, SWEET_TYPES, matchesEntry, type DirectoryEntry } from "@/data/taxonomy";
 import type { ProductWithRelations, RiskTier } from "@/lib/types";
 
@@ -45,7 +45,7 @@ export async function getAllProducts(): Promise<ProductWithRelations[]> {
     prisma!.product.findMany({ include: RELATION_INCLUDE, orderBy: { zeroSpikeScore: "desc" } }),
   );
   if (db) return db as unknown as ProductWithRelations[];
-  return [...SEED_PRODUCTS].sort(sortByScore);
+  return [...memoryStore()].sort(sortByScore);
 }
 
 export async function getProductBySlug(slug: string): Promise<ProductWithRelations | null> {
@@ -54,7 +54,16 @@ export async function getProductBySlug(slug: string): Promise<ProductWithRelatio
   );
   if (db !== null) return db as unknown as ProductWithRelations;
   if (dataSource() === "database") return null; // DB is live but slug not found
-  return SEED_PRODUCTS.find((p) => p.slug === slug) ?? null;
+  return memoryStore().find((p) => p.slug === slug) ?? null;
+}
+
+export async function getProductById(id: string): Promise<ProductWithRelations | null> {
+  const db = await fromDb(() =>
+    prisma!.product.findUnique({ where: { id }, include: RELATION_INCLUDE }),
+  );
+  if (db !== null) return db as unknown as ProductWithRelations;
+  if (dataSource() === "database") return null;
+  return memoryStore().find((p) => p.id === id) ?? null;
 }
 
 export async function getAllSlugs(): Promise<string[]> {

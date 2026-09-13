@@ -26,6 +26,7 @@ const COLUMNS = [
     links: [
       { href: "/products", label: "All products" },
       { href: "/methodology", label: "How we score" },
+      { href: "/admin", label: "Admin" },
     ],
   },
 ];
