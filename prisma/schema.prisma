@@ -1,0 +1,101 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+enum RiskTier {
+  CERTIFIED_SAFE // Score 80-100
+  CAUTION        // Score 40-79
+  DISQUALIFIED   // Score 0-39
+}
+
+enum IntegrationType {
+  AMAZON_TAG     // ASIN/Node link with ?tag=zerospike-21
+  FLIPKART_AFFID // Flipkart link with ?affid=zerospike
+  GOAFFPRO       // GoAffPro tracking ?ref=zerospike
+  D2C_REFERRAL   // Direct D2C URL + Coupon Code
+}
+
+model Product {
+  id               String          @id @default(cuid())
+  slug             String          @unique
+  title            String
+  brand            String
+  rawIngredients   String          @db.Text
+  zeroSpikeScore   Int             @default(0)
+  riskTier         RiskTier        @default(DISQUALIFIED)
+  netCarbsPerServe Float
+  glycemicIndex    Int?
+  primarySweetener String
+  hasMaltitol      Boolean         @default(false)
+  imageUrls        String[]
+  categorySlug     String
+  createdAt        DateTime        @default(now())
+  updatedAt        DateTime        @updatedAt
+
+  affiliateLinks   AffiliateLink[]
+  reviews          HarvestedReview[]
+  youtubeVideos    YouTubeEmbed[]
+  seoMeta          SeoMetadata?
+
+  @@index([categorySlug])
+  @@index([zeroSpikeScore])
+  @@index([slug])
+}
+
+model AffiliateLink {
+  id               String          @id @default(cuid())
+  productId        String
+  integrationType  IntegrationType
+  targetUrl        String          @db.Text
+  asinOrNodeId     String?
+  affiliateTag     String?         // e.g., "zerospike-21"
+  couponCode       String?         // e.g., "ZEROSPIKE10"
+  referralNote     String?
+  priceINR         Float
+  mrpINR           Float
+  isPrimary        Boolean         @default(false)
+  product          Product         @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@index([productId])
+}
+
+model HarvestedReview {
+  id            String   @id @default(cuid())
+  productId     String
+  source        String   // Amazon, Shopify, HealthKart
+  reviewerName  String
+  rating        Int
+  reviewText    String   @db.Text
+  isCgmVerified Boolean  @default(false)
+  sentiment     String   // "glucose_flat" | "taste_match" | "caution"
+  product       Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@index([productId])
+}
+
+model YouTubeEmbed {
+  id           String   @id @default(cuid())
+  productId    String
+  videoId      String
+  title        String
+  channelName  String
+  cgmTimestamp String?  // e.g., "03:15"
+  product      Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@index([productId])
+}
+
+model SeoMetadata {
+  id              String   @id @default(cuid())
+  productId       String   @unique
+  metaTitle       String
+  metaDescription String
+  geoAnswerBlock  String   @db.Text
+  schemaJson      Json
+  product         Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+}
