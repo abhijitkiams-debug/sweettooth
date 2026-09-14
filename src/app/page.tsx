@@ -1,228 +1,235 @@
 import Link from "next/link";
-import {
-  ShieldCheck,
-  ScanLine,
-  Activity,
-  XCircle,
-  ArrowRight,
-  Leaf,
-  FlaskConical,
-} from "lucide-react";
+import { ArrowRight, ArrowUpRight } from "lucide-react";
 import { getFeaturedProducts, getStats, getProductsByTier } from "@/lib/db/repository";
 import { ProductCard } from "@/components/product/ProductCard";
+import { ProductImage } from "@/components/product/ProductImage";
 import { CRAVINGS, SWEET_TYPES } from "@/data/taxonomy";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { siteUrl } from "@/lib/engine/seo";
 
 export const revalidate = 3600;
 
-const HOW = [
-  {
-    icon: ScanLine,
-    title: "We read the label",
-    body: "Every product's full ingredient list is parsed by our curation engine — no marketing claims, just what's actually inside.",
-  },
-  {
-    icon: FlaskConical,
-    title: "We score the spike",
-    body: "Hard-fail additives like maltitol and maltodextrin disqualify instantly. Monk fruit, stevia, allulose and erythritol earn certification.",
-  },
-  {
-    icon: Activity,
-    title: "We verify with CGM proof",
-    body: "Where possible we surface continuous-glucose-monitor readings and blood-sugar tests from real users and reviewers.",
-  },
+const STEPS = [
+  { n: "01", title: "We read the label", body: "Every ingredient list is parsed by our curation engine — not the marketing on the front." },
+  { n: "02", title: "We score the spike", body: "Maltitol and maltodextrin disqualify instantly. Monk fruit, stevia, allulose and erythritol earn certification." },
+  { n: "03", title: "We prove it flat", body: "We surface real continuous-glucose-monitor readings so you can see the response, not just trust it." },
 ];
 
 export default async function HomePage() {
   const [featured, stats, disqualified] = await Promise.all([
-    getFeaturedProducts(6),
+    getFeaturedProducts(8),
     getStats(),
     getProductsByTier("DISQUALIFIED"),
   ]);
+
+  const heroProducts = featured.slice(0, 2);
+  const grid = featured.slice(0, 6);
 
   const orgJsonLd = {
     "@context": "https://schema.org",
     "@type": "Organization",
     name: "ZeroSpike",
     url: siteUrl(),
-    description:
-      "ZeroSpike scores packaged foods for blood-sugar safety against their ingredient labels.",
+    description: "ZeroSpike scores packaged foods for blood-sugar safety against their ingredient labels.",
   };
 
   return (
     <>
       <JsonLd data={orgJsonLd} />
 
-      {/* Hero */}
-      <section className="relative overflow-hidden border-b border-ink/10 bg-gradient-to-b from-mint-50/70 to-cream">
-        <div className="container-page grid gap-10 py-16 md:grid-cols-2 md:py-24">
+      {/* ───────── Hero ───────── */}
+      <section className="container-wide pt-14 pb-16 md:pt-20 md:pb-24">
+        <div className="grid items-center gap-12 lg:grid-cols-[1.05fr_0.95fr]">
           <div className="animate-fade-up">
-            <span className="eyebrow inline-flex items-center gap-1.5">
-              <Leaf size={14} /> Low-GI, verified from the label up
-            </span>
-            <h1 className="mt-4 font-display text-4xl font-semibold leading-[1.1] text-ink sm:text-5xl">
-              Sweet without the <span className="text-mint-600">spike.</span>
+            <span className="eyebrow">Low-GI living, verified</span>
+            <h1 className="mt-5 display text-ink">
+              Eat sweet.
+              <br />
+              Stay <span className="italic text-mint-600">flat.</span>
             </h1>
-            <p className="mt-5 max-w-md text-lg text-ink-soft">
-              ZeroSpike scores diabetic-friendly and keto foods against their real
-              ingredients. Monk fruit and stevia in — maltitol out. Every score is
-              CGM-backed where we can prove it.
+            <p className="lede mt-6 max-w-lg">
+              A curated pantry of diabetic-friendly and keto foods, scored against
+              their real ingredients. The treats you love — without the spike you
+              don&apos;t.
             </p>
-            <div className="mt-7 flex flex-wrap gap-3">
+            <div className="mt-9 flex flex-wrap items-center gap-4">
               <Link href="/products" className="btn-primary">
-                Browse certified foods <ArrowRight size={16} />
+                Explore the pantry <ArrowRight size={17} />
               </Link>
-              <Link href="/methodology" className="btn-outline">
+              <Link href="/methodology" className="group inline-flex items-center gap-1.5 text-[0.95rem] font-medium text-ink">
                 How we score
+                <span className="transition-transform group-hover:translate-x-0.5">
+                  <ArrowUpRight size={16} />
+                </span>
               </Link>
             </div>
-
-            <dl className="mt-10 grid max-w-md grid-cols-3 gap-4">
-              <Stat value={`${stats.certified}`} label="Certified safe" />
-              <Stat value={`${stats.total}`} label="Products scored" />
-              <Stat value={`${stats.categories}`} label="Categories" />
-            </dl>
           </div>
 
+          {/* Lifestyle collage */}
           <div className="animate-fade-up">
-            <div className="card p-6">
-              <div className="flex items-center gap-2 text-mint-700">
-                <ShieldCheck size={18} />
-                <span className="text-sm font-semibold">The ZeroSpike test</span>
-              </div>
-              <ul className="mt-4 space-y-3 text-sm">
-                <RuleRow ok label="Monk Fruit, Stevia, Allulose, Erythritol" note="Approved sweeteners" />
-                <RuleRow ok label="Almond & coconut flour, psyllium, flax" note="Approved bases" />
-                <RuleRow label="Sorbitol, Xylitol, Sucralose, maida" note="Caution" warn />
-                <RuleRow label="Maltitol, HFCS, Dextrose, Maltodextrin" note="Instant disqualification" />
-              </ul>
-              <p className="mt-5 rounded-xl bg-mint-50 px-4 py-3 text-xs text-mint-800">
-                Score = 100 − glycemic penalty − additive penalty. A hard-fail
-                ingredient forces a 0, no matter the marketing.
-              </p>
+            <div className="grid grid-cols-2 gap-4">
+              {heroProducts.map((p, i) => (
+                <Link
+                  key={p.id}
+                  href={`/product/${p.slug}`}
+                  className={i === 1 ? "mt-10" : ""}
+                >
+                  <ProductImage
+                    slug={p.slug}
+                    title={p.title}
+                    tier={p.riskTier}
+                    imageUrls={p.imageUrls}
+                    overline={p.brand}
+                    aspect="aspect-[3/4]"
+                  />
+                  <p className="mt-2.5 font-display text-lg leading-tight text-ink">{p.title}</p>
+                  <p className="text-sm text-mint-600">{p.zeroSpikeScore}/100 · certified</p>
+                </Link>
+              ))}
             </div>
           </div>
         </div>
       </section>
 
-      {/* Browse by craving */}
-      <section className="container-page py-14">
-        <SectionHeading eyebrow="Programmatic directory" title="Find a low-GI swap for any craving" />
-        <div className="mt-6 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
-          {[...CRAVINGS, ...SWEET_TYPES.slice(0, 4)].map((c) => (
-            <Link
-              key={c.slug}
-              href={
-                CRAVINGS.includes(c) ? `/low-gi/${c.slug}` : `/diabetic-friendly/${c.slug}`
-              }
-              className="card flex items-center justify-between gap-2 p-4 transition hover:border-mint-300 hover:shadow-md"
-            >
-              <span className="text-sm font-semibold text-ink">{c.h1.replace(/^Low-GI |^Diabetic-Friendly |^Safe /, "")}</span>
-              <ArrowRight size={16} className="text-mint-600" />
-            </Link>
+      {/* ───────── Stat rule ───────── */}
+      <section className="rule border-b border-ink/10">
+        <div className="container-wide grid grid-cols-2 divide-x divide-ink/10 py-8 md:grid-cols-4">
+          <Stat value={stats.certified} label="Certified safe" />
+          <Stat value={stats.total} label="Products scored" />
+          <Stat value={stats.categories} label="Categories" />
+          <Stat value="0" label="Maltitol allowed" />
+        </div>
+      </section>
+
+      {/* ───────── Manifesto ───────── */}
+      <section className="bg-sand">
+        <div className="container-wide py-20 md:py-28">
+          <div className="max-w-4xl">
+            <span className="eyebrow">Why ZeroSpike</span>
+            <p className="mt-6 font-display text-headline font-medium leading-[1.15] text-ink">
+              “Sugar-free” has been lying to us for years. Maltitol spikes. Maltodextrin
+              spikes. We built ZeroSpike so a label can&apos;t hide behind a claim —
+              <span className="text-mint-600"> only the ingredients get a vote.</span>
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* ───────── How it works ───────── */}
+      <section className="container-wide py-20 md:py-24">
+        <div className="max-w-2xl">
+          <span className="eyebrow">The method</span>
+          <h2 className="mt-4 display-sm text-ink">No hype. Just the ingredient truth.</h2>
+        </div>
+        <div className="mt-12 grid gap-x-10 gap-y-12 md:grid-cols-3">
+          {STEPS.map((s) => (
+            <div key={s.n}>
+              <span className="font-display text-4xl font-semibold text-mint-300">{s.n}</span>
+              <h3 className="mt-4 font-display text-2xl font-semibold text-ink">{s.title}</h3>
+              <p className="mt-2 text-ink-soft">{s.body}</p>
+            </div>
           ))}
         </div>
       </section>
 
-      {/* How it works */}
-      <section className="border-y border-ink/10 bg-paper">
-        <div className="container-page py-14">
-          <SectionHeading eyebrow="How ZeroSpike works" title="No hype. Just the ingredient truth." />
-          <div className="mt-8 grid gap-6 md:grid-cols-3">
-            {HOW.map((h) => (
-              <div key={h.title} className="card p-6">
-                <span className="grid h-11 w-11 place-items-center rounded-full bg-mint-600 text-white">
-                  <h.icon size={20} />
-                </span>
-                <h3 className="mt-4 font-display text-lg font-semibold text-ink">{h.title}</h3>
-                <p className="mt-2 text-sm leading-relaxed text-ink-soft">{h.body}</p>
-              </div>
-            ))}
+      {/* ───────── Featured ───────── */}
+      <section className="container-wide pb-6">
+        <div className="flex items-end justify-between border-t border-ink/10 pt-10">
+          <div>
+            <span className="eyebrow">The edit</span>
+            <h2 className="mt-3 display-sm text-ink">Top-scoring picks</h2>
           </div>
-        </div>
-      </section>
-
-      {/* Featured certified */}
-      <section className="container-page py-14">
-        <div className="flex items-end justify-between">
-          <SectionHeading eyebrow="Certified safe" title="Top-scoring picks" />
-          <Link href="/products" className="hidden text-sm font-semibold text-mint-700 hover:text-mint-800 sm:inline-flex sm:items-center sm:gap-1">
-            View all <ArrowRight size={15} />
+          <Link href="/products" className="hidden items-center gap-1.5 text-[0.95rem] font-medium text-ink hover:text-mint-600 sm:inline-flex">
+            View all <ArrowRight size={16} />
           </Link>
         </div>
-        <div className="mt-6 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {featured.map((p) => (
+        <div className="mt-10 grid grid-cols-2 gap-x-6 gap-y-12 lg:grid-cols-3">
+          {grid.map((p) => (
             <ProductCard key={p.id} product={p} />
           ))}
         </div>
       </section>
 
-      {/* What to avoid — trust/honesty */}
+      {/* ───────── Browse by craving ───────── */}
+      <section className="container-wide py-20 md:py-24">
+        <div className="max-w-2xl">
+          <span className="eyebrow">Find your swap</span>
+          <h2 className="mt-4 display-sm text-ink">A low-GI answer for every craving.</h2>
+        </div>
+        <div className="mt-10 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+          {[...CRAVINGS, ...SWEET_TYPES.slice(0, 4)].map((c) => {
+            const href = CRAVINGS.includes(c) ? `/low-gi/${c.slug}` : `/diabetic-friendly/${c.slug}`;
+            const label = c.h1.replace(/^Low-GI |^Diabetic-Friendly |^Safe |^Best /, "");
+            return (
+              <Link
+                key={c.slug}
+                href={href}
+                className="group flex items-center justify-between gap-2 rounded-2xl bg-paper px-5 py-5 ring-1 ring-ink/[0.06] transition hover:ring-mint-300"
+              >
+                <span className="font-display text-lg font-medium text-ink">{label}</span>
+                <ArrowUpRight size={18} className="text-ink-muted transition group-hover:text-mint-600" />
+              </Link>
+            );
+          })}
+        </div>
+      </section>
+
+      {/* ───────── CGM quote / lifestyle proof ───────── */}
+      <section className="bg-ink text-cream">
+        <div className="container-wide py-20 md:py-28">
+          <span className="text-[0.72rem] font-semibold uppercase tracking-[0.24em] text-mint-300">
+            Proof, on a monitor
+          </span>
+          <blockquote className="mt-8 max-w-4xl font-display text-headline font-medium leading-[1.2]">
+            “Wore my Libre and stayed flat at 96 mg/dL two hours after two cookies.
+            Finally a treat that doesn&apos;t spike.”
+          </blockquote>
+          <p className="mt-6 text-cream/70">Dr. Kavya R. · CGM-verified review</p>
+        </div>
+      </section>
+
+      {/* ───────── What to avoid ───────── */}
       {disqualified.length > 0 && (
-        <section className="border-t border-ink/10 bg-red-50/40">
-          <div className="container-page py-14">
-            <div className="flex items-center gap-2 text-red-700">
-              <XCircle size={18} />
-              <span className="eyebrow !text-red-700">We tell you what to avoid</span>
-            </div>
-            <h2 className="mt-2 font-display text-2xl font-semibold text-ink sm:text-3xl">
-              Disqualified: “sugar-free” that still spikes
-            </h2>
-            <p className="mt-2 max-w-2xl text-ink-soft">
-              These popular products fail the ZeroSpike test — usually because
-              they hide maltitol or maltodextrin behind a “sugar-free” label.
+        <section className="container-wide py-20 md:py-24">
+          <div className="max-w-2xl">
+            <span className="eyebrow !text-danger">We tell you what to avoid</span>
+            <h2 className="mt-4 display-sm text-ink">“Sugar-free” that still spikes.</h2>
+            <p className="lede mt-4">
+              These popular products fail the ZeroSpike test — usually because they
+              hide maltitol or maltodextrin behind the label.
             </p>
-            <div className="mt-6 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
-              {disqualified.map((p) => (
-                <ProductCard key={p.id} product={p} />
-              ))}
-            </div>
+          </div>
+          <div className="mt-10 grid grid-cols-2 gap-x-6 gap-y-12 lg:grid-cols-3">
+            {disqualified.slice(0, 3).map((p) => (
+              <ProductCard key={p.id} product={p} />
+            ))}
           </div>
         </section>
       )}
+
+      {/* ───────── Final CTA ───────── */}
+      <section className="container-wide pb-24">
+        <div className="rounded-3xl bg-mint-600 px-8 py-16 text-center text-cream md:py-20">
+          <h2 className="display-sm mx-auto max-w-3xl !text-cream">
+            Your pantry, minus the guesswork.
+          </h2>
+          <p className="mx-auto mt-4 max-w-xl text-cream/85">
+            Browse every certified-safe food, ranked by ZeroSpike Score.
+          </p>
+          <Link href="/products" className="btn mt-8 bg-cream text-ink hover:bg-paper">
+            Explore the pantry <ArrowRight size={17} />
+          </Link>
+        </div>
+      </section>
     </>
   );
 }
 
-function Stat({ value, label }: { value: string; label: string }) {
+function Stat({ value, label }: { value: string | number; label: string }) {
   return (
-    <div>
-      <dt className="font-display text-2xl font-semibold text-ink">{value}</dt>
-      <dd className="text-xs text-ink-muted">{label}</dd>
+    <div className="px-4 first:pl-0">
+      <div className="font-display text-4xl font-semibold text-ink md:text-5xl">{value}</div>
+      <div className="mt-1 text-sm text-ink-muted">{label}</div>
     </div>
-  );
-}
-
-function SectionHeading({ eyebrow, title }: { eyebrow: string; title: string }) {
-  return (
-    <div>
-      <span className="eyebrow">{eyebrow}</span>
-      <h2 className="mt-2 font-display text-2xl font-semibold text-ink sm:text-3xl">{title}</h2>
-    </div>
-  );
-}
-
-function RuleRow({
-  label,
-  note,
-  ok,
-  warn,
-}: {
-  label: string;
-  note: string;
-  ok?: boolean;
-  warn?: boolean;
-}) {
-  const color = ok ? "text-mint-600" : warn ? "text-amber-500" : "text-red-500";
-  const Icon = ok ? ShieldCheck : warn ? Activity : XCircle;
-  return (
-    <li className="flex items-start gap-3">
-      <Icon size={17} className={`mt-0.5 shrink-0 ${color}`} />
-      <span>
-        <span className="font-medium text-ink">{label}</span>
-        <span className="block text-xs text-ink-muted">{note}</span>
-      </span>
-    </li>
   );
 }

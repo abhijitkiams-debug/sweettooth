@@ -14,30 +14,67 @@ html {
 body {
   background-color: theme("colors.cream");
   color: theme("colors.ink.DEFAULT");
+  font-size: 1.0625rem; /* 17px base — calmer, more editorial */
+  line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
 
+::selection {
+  background: theme("colors.mint.200");
+  color: theme("colors.ink.DEFAULT");
+}
+
+@layer base {
+  h1, h2, h3 {
+    font-family: var(--font-display);
+    letter-spacing: -0.02em;
+    color: theme("colors.ink.DEFAULT");
+  }
+}
+
 @layer components {
   .container-page {
-    @apply mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8;
+    @apply mx-auto w-full max-w-6xl px-5 sm:px-8 lg:px-10;
+  }
+  .container-wide {
+    @apply mx-auto w-full max-w-7xl px-5 sm:px-8 lg:px-10;
+  }
+
+  /* Oversized editorial display type */
+  .display {
+    @apply font-display text-display font-semibold;
+  }
+  .display-sm {
+    @apply font-display text-display-sm font-semibold;
+  }
+  .headline {
+    @apply font-display text-headline font-semibold;
+  }
+  .lede {
+    @apply text-lede text-ink-soft;
   }
 
   .btn {
-    @apply inline-flex items-center justify-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold transition focus:outline-none focus-visible:ring-2 focus-visible:ring-mint-500 focus-visible:ring-offset-2;
+    @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-[0.95rem] font-medium transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-mint-500 focus-visible:ring-offset-2 focus-visible:ring-offset-cream;
   }
   .btn-primary {
-    @apply btn bg-mint-600 text-white hover:bg-mint-700;
+    @apply btn bg-ink text-cream hover:bg-mint-700;
   }
   .btn-outline {
-    @apply btn border border-ink/15 bg-white text-ink hover:border-ink/30;
+    @apply btn border border-ink/20 bg-transparent text-ink hover:border-ink/50 hover:bg-ink/[0.03];
   }
 
   .card {
-    @apply rounded-2xl border border-ink/10 bg-paper shadow-card;
+    @apply rounded-3xl bg-paper shadow-card ring-1 ring-ink/[0.06];
   }
 
   .eyebrow {
-    @apply text-xs font-semibold uppercase tracking-[0.18em] text-mint-700;
+    @apply text-[0.72rem] font-semibold uppercase tracking-[0.24em] text-mint-600;
+  }
+
+  /* Thin editorial hairline used between sections */
+  .rule {
+    @apply border-t border-ink/10;
   }
 }

@@ -140,7 +140,7 @@ export default async function ProductPage({ params }: { params: { slug: string }
               <span className="text-sm font-medium text-ink-muted">
                 {categoryLabel} · {product.brand}
               </span>
-              <h1 className="mt-1 font-display text-3xl font-semibold leading-tight text-ink">
+              <h1 className="mt-1 font-display text-headline font-semibold leading-tight text-ink">
                 {product.title}
               </h1>
               <div className="mt-4 flex items-center gap-5">
@@ -223,8 +223,8 @@ export default async function ProductPage({ params }: { params: { slug: string }
 
       {related.length > 0 && (
         <section className="mt-14">
-          <h2 className="font-display text-2xl font-semibold text-ink">More {categoryLabel}</h2>
-          <div className="mt-6 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          <h2 className="display-sm text-ink">More {categoryLabel}</h2>
+          <div className="mt-8 grid grid-cols-2 gap-x-6 gap-y-12 lg:grid-cols-3">
             {related.map((p) => (
               <ProductCard key={p.id} product={p} />
             ))}

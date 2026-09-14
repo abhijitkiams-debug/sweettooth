@@ -1,11 +1,10 @@
 import Link from "next/link";
-import { Activity } from "lucide-react";
 import { describeLLM } from "@/lib/llm";
 import { dataSource } from "@/lib/db/repository";
 
 const COLUMNS = [
   {
-    title: "Low-GI Swaps",
+    title: "Low-GI swaps",
     links: [
       { href: "/low-gi/rice-alternative", label: "Rice alternatives" },
       { href: "/low-gi/roti-alternative", label: "Roti alternatives" },
@@ -14,7 +13,7 @@ const COLUMNS = [
     ],
   },
   {
-    title: "Diabetic-Friendly",
+    title: "Diabetic-friendly",
     links: [
       { href: "/diabetic-friendly/kaju-katli", label: "Kaju katli" },
       { href: "/diabetic-friendly/cookies", label: "Cookies" },
@@ -33,43 +32,43 @@ const COLUMNS = [
 
 export function Footer() {
   return (
-    <footer className="mt-20 border-t border-ink/10 bg-paper">
-      <div className="container-page grid gap-10 py-12 md:grid-cols-4">
-        <div>
-          <div className="flex items-center gap-2 font-display text-lg font-semibold">
-            <span className="grid h-7 w-7 place-items-center rounded-full bg-mint-600 text-white">
-              <Activity size={15} strokeWidth={2.5} />
-            </span>
-            ZeroSpike
+    <footer className="mt-24 bg-ink text-cream">
+      <div className="container-wide py-16 md:py-20">
+        <div className="grid gap-12 md:grid-cols-[1.4fr_1fr_1fr_1fr]">
+          <div>
+            <Link href="/" className="font-display text-3xl font-semibold tracking-tightest text-cream">
+              ZeroSpike<span className="text-mint-300">.</span>
+            </Link>
+            <p className="mt-4 max-w-xs text-cream/70">
+              We read every label so your blood sugar stays flat. Sweet without the spike.
+            </p>
           </div>
-          <p className="mt-3 max-w-xs text-sm text-ink-muted">
-            Ingredient-verified low-GI foods. We read every label so your blood
-            sugar stays flat.
-          </p>
-        </div>
 
-        {COLUMNS.map((col) => (
-          <div key={col.title}>
-            <h4 className="text-sm font-semibold text-ink">{col.title}</h4>
-            <ul className="mt-3 space-y-2">
-              {col.links.map((l) => (
-                <li key={l.href}>
-                  <Link href={l.href} className="text-sm text-ink-muted hover:text-ink">
-                    {l.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-        ))}
+          {COLUMNS.map((col) => (
+            <div key={col.title}>
+              <h4 className="text-[0.72rem] font-semibold uppercase tracking-[0.2em] text-mint-300">
+                {col.title}
+              </h4>
+              <ul className="mt-4 space-y-2.5">
+                {col.links.map((l) => (
+                  <li key={l.href}>
+                    <Link href={l.href} className="text-cream/75 transition hover:text-cream">
+                      {l.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
       </div>
 
-      <div className="border-t border-ink/10">
-        <div className="container-page flex flex-col gap-2 py-5 text-xs text-ink-muted sm:flex-row sm:items-center sm:justify-between">
+      <div className="border-t border-cream/10">
+        <div className="container-wide flex flex-col gap-2 py-6 text-xs text-cream/55 sm:flex-row sm:items-center sm:justify-between">
           <p>© {new Date().getFullYear()} ZeroSpike. Affiliate links may earn us a commission.</p>
           <p>
-            Curation engine: <span className="font-medium text-ink-soft">{describeLLM()}</span> ·
-            Data: <span className="font-medium text-ink-soft">{dataSource()}</span>
+            Engine: <span className="text-cream/80">{describeLLM()}</span> · Data:{" "}
+            <span className="text-cream/80">{dataSource()}</span>
           </p>
         </div>
       </div>

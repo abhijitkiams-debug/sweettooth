@@ -43,9 +43,9 @@ export async function DirectoryPage({
         <span className="text-ink">{crumbLabel}</span>
       </nav>
 
-      <header className="mt-4 max-w-2xl">
-        <h1 className="font-display text-3xl font-semibold text-ink sm:text-4xl">{entry.h1}</h1>
-        <p className="mt-3 text-ink-soft">{entry.intro}</p>
+      <header className="mt-4 max-w-3xl">
+        <h1 className="display-sm text-ink">{entry.h1}</h1>
+        <p className="lede mt-5">{entry.intro}</p>
       </header>
 
       <div className="mt-6">
@@ -54,8 +54,8 @@ export async function DirectoryPage({
 
       {certified.length > 0 ? (
         <section className="mt-10">
-          <h2 className="font-display text-2xl font-semibold text-ink">Certified-safe picks</h2>
-          <div className="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          <h2 className="display-sm text-ink">Certified-safe picks</h2>
+          <div className="mt-8 grid grid-cols-2 gap-x-6 gap-y-12 lg:grid-cols-3">
             {certified.map((p) => (
               <ProductCard key={p.id} product={p} />
             ))}
@@ -69,14 +69,14 @@ export async function DirectoryPage({
 
       {cautionOrWorse.length > 0 && (
         <section className="mt-12">
-          <h2 className="flex items-center gap-2 font-display text-2xl font-semibold text-ink">
-            <XCircle size={20} className="text-red-500" /> Watch out for these
+          <h2 className="flex items-center gap-2.5 display-sm text-ink">
+            <XCircle size={26} className="text-danger" /> Watch out for these
           </h2>
-          <p className="mt-1 text-sm text-ink-soft">
+          <p className="mt-3 text-ink-soft">
             These match your search but scored Caution or worse — usually a hidden
             spike ingredient.
           </p>
-          <div className="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="mt-8 grid grid-cols-2 gap-x-6 gap-y-12 lg:grid-cols-3">
             {cautionOrWorse.map((p) => (
               <ProductCard key={p.id} product={p} />
             ))}

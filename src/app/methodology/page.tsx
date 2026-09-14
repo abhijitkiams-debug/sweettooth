@@ -21,10 +21,10 @@ function uniqTitle(list: readonly string[]): string[] {
 
 export default function MethodologyPage() {
   return (
-    <div className="container-page max-w-3xl py-12">
+    <div className="container-page max-w-3xl py-14 md:py-20">
       <span className="eyebrow">Transparency</span>
-      <h1 className="mt-2 font-display text-4xl font-semibold text-ink">How we score</h1>
-      <p className="mt-4 text-lg text-ink-soft">
+      <h1 className="mt-4 display-sm text-ink">How we score</h1>
+      <p className="lede mt-5">
         Every ZeroSpike Score comes from one formula applied to a product&apos;s real
         ingredient list — not its marketing.
       </p>

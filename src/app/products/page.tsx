@@ -14,13 +14,11 @@ export default async function ProductsPage() {
   const [products, stats] = await Promise.all([getAllProducts(), getStats()]);
 
   return (
-    <div className="container-page py-10 md:py-14">
-      <header className="max-w-2xl">
-        <span className="eyebrow">The full catalogue</span>
-        <h1 className="mt-2 font-display text-3xl font-semibold text-ink sm:text-4xl">
-          {stats.total} products, scored against their labels
-        </h1>
-        <p className="mt-3 text-ink-soft">
+    <div className="container-wide py-12 md:py-16">
+      <header className="max-w-3xl">
+        <span className="eyebrow">The pantry</span>
+        <h1 className="mt-4 display-sm text-ink">Every food, scored against its label.</h1>
+        <p className="lede mt-5">
           {stats.certified} certified safe · {stats.caution} caution ·{" "}
           {stats.disqualified} disqualified. Filter to find exactly what fits your
           blood-sugar goals.
