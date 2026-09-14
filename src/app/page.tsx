@@ -1,9 +1,9 @@
 import Link from "next/link";
 import { ArrowRight, ArrowUpRight } from "lucide-react";
-import { getFeaturedProducts, getStats, getProductsByTier } from "@/lib/db/repository";
+import { getFeaturedProducts, getStats, getProductsByTier, getAllProducts } from "@/lib/db/repository";
 import { ProductCard } from "@/components/product/ProductCard";
 import { ProductImage } from "@/components/product/ProductImage";
-import { CRAVINGS, SWEET_TYPES } from "@/data/taxonomy";
+import { CRAVINGS, SWEET_TYPES, CATEGORIES } from "@/data/taxonomy";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { siteUrl } from "@/lib/engine/seo";
 
@@ -16,14 +16,20 @@ const STEPS = [
 ];
 
 export default async function HomePage() {
-  const [featured, stats, disqualified] = await Promise.all([
+  const [featured, stats, disqualified, all] = await Promise.all([
     getFeaturedProducts(8),
     getStats(),
     getProductsByTier("DISQUALIFIED"),
+    getAllProducts(),
   ]);
 
   const heroProducts = featured.slice(0, 2);
   const grid = featured.slice(0, 6);
+
+  // Categories that have products, in merchandising rank order.
+  const catCounts = new Map<string, number>();
+  for (const p of all) catCounts.set(p.categorySlug, (catCounts.get(p.categorySlug) ?? 0) + 1);
+  const shopCategories = CATEGORIES.filter((c) => catCounts.has(c.slug));
 
   const orgJsonLd = {
     "@context": "https://schema.org",
@@ -45,7 +51,7 @@ export default async function HomePage() {
             <h1 className="mt-5 display text-ink">
               Eat sweet.
               <br />
-              Stay <span className="italic text-mint-600">flat.</span>
+              Stay <span className="text-mint-500">flat.</span>
             </h1>
             <p className="lede mt-6 max-w-lg">
               A curated pantry of diabetic-friendly and keto foods, scored against
@@ -77,7 +83,7 @@ export default async function HomePage() {
                   <ProductImage
                     slug={p.slug}
                     title={p.title}
-                    tier={p.riskTier}
+                    categorySlug={p.categorySlug}
                     imageUrls={p.imageUrls}
                     overline={p.brand}
                     aspect="aspect-[3/4]"
@@ -112,6 +118,46 @@ export default async function HomePage() {
               <span className="text-mint-600"> only the ingredients get a vote.</span>
             </p>
           </div>
+        </div>
+      </section>
+
+      {/* ───────── Shop by category (ranked) ───────── */}
+      <section className="container-wide py-20 md:py-24">
+        <div className="max-w-2xl">
+          <span className="eyebrow">Shop by category</span>
+          <h2 className="mt-4 display-sm text-ink">Start with the good stuff.</h2>
+        </div>
+        <div className="mt-10 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
+          {shopCategories.map((c) => (
+            <Link
+              key={c.slug}
+              href={`/products#${c.slug}`}
+              className="group relative flex aspect-[5/4] flex-col justify-between overflow-hidden rounded-3xl p-5 transition hover:-translate-y-1"
+              style={{ backgroundColor: c.tint }}
+            >
+              <span
+                className="text-[0.68rem] font-semibold uppercase tracking-[0.18em]"
+                style={{ color: c.accent }}
+              >
+                {catCounts.get(c.slug)} picks
+              </span>
+              <div>
+                <span
+                  className="pointer-events-none absolute -right-3 -top-4 font-display text-7xl font-bold opacity-20"
+                  style={{ color: c.accent }}
+                  aria-hidden
+                >
+                  {c.label.charAt(0)}
+                </span>
+                <h3 className="font-display text-xl font-semibold leading-tight text-ink">
+                  {c.label}
+                </h3>
+                <span className="mt-1 inline-flex items-center gap-1 text-sm" style={{ color: c.accent }}>
+                  Shop <ArrowUpRight size={15} />
+                </span>
+              </div>
+            </Link>
+          ))}
         </div>
       </section>
 

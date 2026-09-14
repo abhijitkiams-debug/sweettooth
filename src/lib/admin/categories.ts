@@ -1,4 +1,4 @@
-import { CATEGORY_LABELS, CRAVINGS, SWEET_TYPES, matchesEntry } from "@/data/taxonomy";
+import { CATEGORY_LABELS, CRAVINGS, SWEET_TYPES, matchesEntry, categoryRank } from "@/data/taxonomy";
 import { humanizeSlug } from "@/lib/utils/format";
 import type { ProductWithRelations } from "@/lib/types";
 
@@ -14,7 +14,7 @@ export function categoryOptions(products: ProductWithRelations[]): CategoryOptio
     ...products.map((p) => p.categorySlug),
   ]);
   return [...slugs]
-    .sort()
+    .sort((a, b) => categoryRank(a) - categoryRank(b))
     .map((slug) => ({ slug, label: CATEGORY_LABELS[slug] ?? humanizeSlug(slug) }));
 }
 

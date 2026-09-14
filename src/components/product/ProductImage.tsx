@@ -1,28 +1,17 @@
 import type { RiskTier } from "@/lib/types";
+import { categoryMeta } from "@/data/taxonomy";
 
 /**
- * Editorial "lifestyle" swatch used in place of external product photos, so the
- * demo never shows a broken image while still feeling like a premium D2C brand.
- * A deterministic warm hue per slug keeps products distinct; the tier tints only
- * a soft corner glow, keeping the overall look calm and minimal. If real
- * imageUrls exist, the first is used instead.
+ * Joyful, appetising category swatch used in place of external product photos,
+ * so the demo never shows a broken image while still feeling like a fun,
+ * guilt-free treat brand. The tile colour comes from the product's category
+ * (see CATEGORIES in taxonomy) so the catalogue reads as bright and varied.
+ * If real imageUrls exist, the first is used instead.
  */
-const TIER_GLOW: Record<RiskTier, string> = {
-  CERTIFIED_SAFE: "81 123 69", // sage
-  CAUTION: "176 122 26", // amber
-  DISQUALIFIED: "178 59 46", // clay-red
-};
-
-function hue(seed: string): number {
-  let h = 0;
-  for (let i = 0; i < seed.length; i++) h = (h * 31 + seed.charCodeAt(i)) % 360;
-  return h;
-}
-
 export function ProductImage({
   slug,
   title,
-  tier,
+  categorySlug,
   imageUrls,
   overline,
   className = "",
@@ -30,7 +19,8 @@ export function ProductImage({
 }: {
   slug: string;
   title: string;
-  tier: RiskTier;
+  categorySlug: string;
+  tier?: RiskTier;
   imageUrls?: string[];
   overline?: string;
   className?: string;
@@ -47,36 +37,36 @@ export function ProductImage({
     );
   }
 
-  const h = hue(slug);
-  const glow = TIER_GLOW[tier];
-  const monogram = title
-    .split(/\s+/)
-    .slice(0, 1)
-    .map((w) => w[0])
-    .join("")
-    .toUpperCase();
+  const { tint, accent } = categoryMeta(categorySlug);
+  const monogram = title.trim().charAt(0).toUpperCase();
 
   return (
     <div
       className={`relative ${aspect} w-full overflow-hidden rounded-2xl ${className}`}
-      style={{ backgroundColor: `hsl(${h} 24% 90%)` }}
+      style={{ backgroundColor: tint }}
       role="img"
       aria-label={title}
     >
-      {/* warm editorial wash */}
+      {/* soft duotone bloom for depth */}
       <div
         className="absolute inset-0"
         style={{
-          background: `radial-gradient(130% 120% at 18% 12%, hsl(${h} 30% 95% / 0.9), transparent 55%), radial-gradient(120% 130% at 88% 92%, rgb(${glow} / 0.16), transparent 58%)`,
+          background: `radial-gradient(120% 120% at 22% 14%, rgba(255,255,255,0.55), transparent 55%), radial-gradient(130% 130% at 85% 92%, ${accent}33, transparent 60%)`,
         }}
       />
       {overline && (
-        <span className="absolute left-4 top-4 text-[0.62rem] font-semibold uppercase tracking-[0.22em] text-ink/45">
+        <span
+          className="absolute left-4 top-4 text-[0.62rem] font-semibold uppercase tracking-[0.2em]"
+          style={{ color: accent }}
+        >
           {overline}
         </span>
       )}
       <div className="absolute inset-0 grid place-items-center">
-        <span className="font-display text-[clamp(3rem,7vw,5rem)] font-semibold text-ink/25">
+        <span
+          className="font-display text-[clamp(3rem,7vw,5rem)] font-bold"
+          style={{ color: accent, opacity: 0.9 }}
+        >
           {monogram}
         </span>
       </div>

@@ -132,8 +132,9 @@ export default async function ProductPage({ params }: { params: { slug: string }
             <ProductImage
               slug={product.slug}
               title={product.title}
-              tier={product.riskTier}
+              categorySlug={product.categorySlug}
               imageUrls={product.imageUrls}
+              overline={product.brand}
               aspect="aspect-square"
             />
             <div>

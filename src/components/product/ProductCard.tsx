@@ -2,7 +2,6 @@ import Link from "next/link";
 import type { ProductWithRelations } from "@/lib/types";
 import { formatINR, discountPct } from "@/lib/utils/format";
 import { lowestPrice } from "@/lib/engine/seo";
-import { CATEGORY_LABELS } from "@/data/taxonomy";
 import { ProductImage } from "./ProductImage";
 
 const SCORE_COLOR = (tier: string) =>
@@ -20,7 +19,6 @@ export function ProductCard({ product }: { product: ProductWithRelations }) {
     ? Math.max(...product.affiliateLinks.map((l) => l.mrpINR))
     : null;
   const off = price != null && mrp != null ? discountPct(mrp, price) : 0;
-  const category = CATEGORY_LABELS[product.categorySlug] ?? product.categorySlug;
 
   return (
     <Link href={`/product/${product.slug}`} className="group flex flex-col">
@@ -29,9 +27,9 @@ export function ProductCard({ product }: { product: ProductWithRelations }) {
           <ProductImage
             slug={product.slug}
             title={product.title}
-            tier={product.riskTier}
+            categorySlug={product.categorySlug}
             imageUrls={product.imageUrls}
-            overline={category}
+            overline={product.brand}
           />
         </div>
         {/* Score chip — the one piece of data-forward chrome */}

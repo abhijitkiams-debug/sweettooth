@@ -59,6 +59,9 @@ body {
     @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-[0.95rem] font-medium transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-mint-500 focus-visible:ring-offset-2 focus-visible:ring-offset-cream;
   }
   .btn-primary {
+    @apply btn bg-mint-500 text-white shadow-[0_8px_20px_-8px_rgba(18,173,84,0.6)] hover:bg-mint-600;
+  }
+  .btn-ink {
     @apply btn bg-ink text-cream hover:bg-mint-700;
   }
   .btn-outline {

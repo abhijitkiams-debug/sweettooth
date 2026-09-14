@@ -5,36 +5,40 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        // Warm, editorial neutrals with a single calm sage accent.
+        // Bright, joyful "guilt-free treat" palette.
         ink: {
-          DEFAULT: "#1b1a15", // warm near-black
-          soft: "#4d4a40",
-          muted: "#8f8b7d",
+          DEFAULT: "#17240f", // deep leaf-green near-black — warmer than pure black
+          soft: "#41503a",
+          muted: "#7c8a74",
         },
-        cream: "#f4f1e9", // warm paper ground
-        paper: "#fbfaf5",
-        sand: "#e9e4d6", // subtle warm panel
-        clay: "#c9713f", // warm secondary accent, used sparingly
-        // Sage green — muted, wellness-forward.
+        cream: "#fff7ea", // sunny, bright warm ground
+        paper: "#ffffff",
+        sand: "#fbefd8", // warm cream panel
+        // Fresh, vivid green — the "zero / healthy" signal.
         mint: {
-          50: "#f0f4ee",
-          100: "#dde7d7",
-          200: "#bccfb1",
-          300: "#94b285",
-          400: "#6d9760",
-          500: "#517b45",
-          600: "#3f6337",
-          700: "#344f2e",
-          800: "#2b3f27",
-          900: "#243421",
+          50: "#e9fbef",
+          100: "#c9f5d7",
+          200: "#98ebb5",
+          300: "#5cdd8e",
+          400: "#2ec96c",
+          500: "#12ad54",
+          600: "#0a8f45",
+          700: "#0b723a",
+          800: "#0d5a30",
+          900: "#0c4a29",
         },
-        safe: "#3f6337",
-        caution: "#b07a1a",
-        danger: "#b23b2e",
+        // Playful secondary accents — indulgent "treat" pops.
+        berry: "#ef4d75", // raspberry
+        mango: "#ffb020", // sunny amber
+        grape: "#a366d6",
+        sky: "#33b4c9",
+        safe: "#0a8f45",
+        caution: "#c9871a",
+        danger: "#e0473f",
       },
       fontFamily: {
-        sans: ["var(--font-sans)", "system-ui", "sans-serif"],
-        display: ["var(--font-display)", "Georgia", "serif"],
+        sans: ["var(--font-sans)", "ui-sans-serif", "system-ui", "sans-serif"],
+        display: ["var(--font-display)", "ui-sans-serif", "system-ui", "sans-serif"],
       },
       fontSize: {
         // Fluid, oversized editorial scale.

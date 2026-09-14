@@ -1,4 +1,5 @@
 import type { Product } from "@/lib/types";
+import { humanizeSlug } from "@/lib/utils/format";
 
 /**
  * Programmatic-SEO taxonomy. Each craving / sweet-type is an indexable landing
@@ -168,15 +169,52 @@ export function matchesEntry(product: Product, entry: DirectoryEntry): boolean {
   return false;
 }
 
-export const CATEGORY_LABELS: Record<string, string> = {
-  cookies: "Cookies & Biscuits",
-  chocolate: "Chocolate",
-  mithai: "Indian Mithai",
-  flours: "Flours & Atta",
-  staples: "Rice & Staples",
-  spreads: "Spreads & Butters",
-  snacks: "Snacks",
-  bakery: "Bakery",
-  bars: "Protein Bars",
-  "ice-cream": "Ice Cream",
-};
+/**
+ * Category catalogue — ordered by merchandising rank and given a joyful,
+ * appetising colour so product tiles pop (guilt-free treat energy, not dull).
+ * `tint` is the tile background; `accent` is the strong text/graphic colour.
+ * Order here is the canonical display order across the whole site.
+ */
+export interface CategoryMeta {
+  slug: string;
+  label: string;
+  tint: string;
+  accent: string;
+}
+
+export const CATEGORIES: CategoryMeta[] = [
+  { slug: "mithai", label: "Sweets & Mithai", tint: "#ffe6bf", accent: "#e0891b" },
+  { slug: "chocolate", label: "Chocolate", tint: "#ecd6c4", accent: "#8a5433" },
+  { slug: "ice-cream", label: "Ice Cream", tint: "#ffd7e5", accent: "#e2547f" },
+  { slug: "cakes", label: "Cakes", tint: "#eed7f7", accent: "#a556cf" },
+  { slug: "cookies", label: "Biscuits & Cookies", tint: "#f8e3c2", accent: "#c67f27" },
+  { slug: "drinks", label: "Drinks", tint: "#cdeef4", accent: "#1f93a6" },
+  { slug: "staples", label: "Rice & Staples", tint: "#d6f0dd", accent: "#1a9a51" },
+  { slug: "flours", label: "Flours & Atta", tint: "#f0e2c3", accent: "#b17f2c" },
+  { slug: "spreads", label: "Spreads & Butters", tint: "#efe0c6", accent: "#b0863f" },
+  { slug: "snacks", label: "Snacks", tint: "#d2ece7", accent: "#1f9a8e" },
+  { slug: "bakery", label: "Bakery", tint: "#f8ddc7", accent: "#c37340" },
+  { slug: "bars", label: "Protein Bars", tint: "#f9d6d1", accent: "#d5514a" },
+];
+
+const CATEGORY_INDEX = new Map(CATEGORIES.map((c, i) => [c.slug, i]));
+
+export const CATEGORY_LABELS: Record<string, string> = Object.fromEntries(
+  CATEGORIES.map((c) => [c.slug, c.label]),
+);
+
+/** Rank for sorting; unknown categories sort to the end (alphabetically after). */
+export function categoryRank(slug: string): number {
+  return CATEGORY_INDEX.has(slug) ? CATEGORY_INDEX.get(slug)! : CATEGORIES.length + 1;
+}
+
+export function categoryMeta(slug: string): CategoryMeta {
+  return (
+    CATEGORIES.find((c) => c.slug === slug) ?? {
+      slug,
+      label: humanizeSlug(slug),
+      tint: "#e9e4d6",
+      accent: "#5b6b52",
+    }
+  );
+}
