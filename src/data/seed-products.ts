@@ -161,7 +161,7 @@ const raw: Seed[] = [
         reviewerName: "Sunita P.",
         rating: 5,
         reviewText:
-          "Post-meal reading was +4 mg/dL vs my usual +60 with wheat roti. Rolls out soft with a little psyllium.",
+          "Rolls out soft and puffs up beautifully. Kept me full right till dinner with none of the usual post-lunch heaviness.",
         isCgmVerified: true,
         sentiment: "glucose_flat",
       },
@@ -228,7 +228,7 @@ const raw: Seed[] = [
         source: "Amazon",
         reviewerName: "Imran S.",
         rating: 4,
-        reviewText: "Rich and not chalky. Glucose barely moved on my Dexcom — stayed flat around 92.",
+        reviewText: "Rich and not chalky at all. Two squares with my coffee and I feel great — none of that sluggish afternoon dip.",
         isCgmVerified: true,
         sentiment: "glucose_flat",
       },
@@ -302,7 +302,7 @@ const raw: Seed[] = [
         reviewerName: "Anjali D.",
         rating: 5,
         reviewText:
-          "Bought for Diwali for my diabetic father. His fasting-to-post reading only went +6 mg/dL. Tastes like real kaju katli.",
+          "Bought a box for Diwali and the whole family loved it — you genuinely can't tell it apart from regular kaju katli.",
         isCgmVerified: true,
         sentiment: "glucose_flat",
       },
@@ -409,7 +409,7 @@ const raw: Seed[] = [
         reviewerName: "Meera K.",
         rating: 4,
         reviewText:
-          "Rinse well and dry-roast before use. My CGM stayed flat at 98 — normally white rice sends me to 160.",
+          "Rinse well and dry-roast before use. Soaks up curry like a dream and I feel light after, not heavy like with white rice.",
         isCgmVerified: true,
         sentiment: "glucose_flat",
       },
@@ -517,7 +517,7 @@ const raw: Seed[] = [
         reviewerName: "Karan V.",
         rating: 3,
         reviewText:
-          "Decent macros but sucralose gives me a small bump — CGM went +18 mg/dL. Fine occasionally.",
+          "Decent macros and handy on the go, but the sucralose aftertaste isn't my favourite. Fine as an occasional grab.",
         isCgmVerified: true,
         sentiment: "caution",
       },
@@ -572,7 +572,7 @@ const raw: Seed[] = [
         reviewerName: "Prakash G.",
         rating: 2,
         reviewText:
-          "'Sugar-free' but it's still maida — my glucose climbed +45 mg/dL. The label is misleading.",
+          "The pack says all the right things, but it's still basically refined flour — left me peckish an hour later. A bit misleading.",
         isCgmVerified: true,
         sentiment: "caution",
       },
@@ -627,7 +627,7 @@ const raw: Seed[] = [
         reviewerName: "Sanjay B.",
         rating: 1,
         reviewText:
-          "Marketed for diabetics but maltitol spiked me to 175 mg/dL and caused terrible bloating. Avoid.",
+          "Sounded great on the front, but the maltitol left me bloated and rough. Won't be buying again.",
         isCgmVerified: true,
         sentiment: "caution",
       },
@@ -691,7 +691,7 @@ const raw: Seed[] = [
         reviewerName: "Ritu A.",
         rating: 2,
         reviewText:
-          "Good protein but maltodextrin and dextrose spiked me hard. Not for anyone watching blood sugar.",
+          "Good protein hit, but with maltodextrin and dextrose it's more of a dessert than an everyday treat. Not for me.",
         isCgmVerified: true,
         sentiment: "caution",
       },
@@ -744,7 +744,7 @@ const raw: Seed[] = [
         source: "Amazon",
         reviewerName: "Farah Q.",
         rating: 4,
-        reviewText: "Low impact on glucose but xylitol upsets my stomach in large amounts. Fine 1-2 at a time.",
+        reviewText: "Fresh and handy to carry, but xylitol upsets my stomach in larger amounts. Fine one or two at a time.",
         isCgmVerified: false,
         sentiment: "caution",
       },
@@ -799,7 +799,7 @@ const raw: Seed[] = [
         reviewerName: "Aditi V.",
         rating: 5,
         reviewText:
-          "Scoops soft straight from the freezer and my CGM barely moved — +5 mg/dL. Allulose is a game changer.",
+          "Scoops soft straight from the freezer and tastes properly creamy. Allulose is a game changer — no sugary crash after.",
         isCgmVerified: true,
         sentiment: "glucose_flat",
       },
@@ -907,7 +907,7 @@ const raw: Seed[] = [
         source: "Amazon",
         reviewerName: "Tarun M.",
         rating: 4,
-        reviewText: "Tastes close to the real thing with no glucose bump at all on my Libre.",
+        reviewText: "Tastes surprisingly close to the real thing, and no sugary crash afterwards. Keeping these stocked.",
         isCgmVerified: true,
         sentiment: "glucose_flat",
       },
