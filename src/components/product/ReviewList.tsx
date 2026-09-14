@@ -30,7 +30,7 @@ export function ReviewList({ reviews }: { reviews: HarvestedReview[] }) {
             <span className="text-xs text-ink-muted">via {r.source}</span>
             {r.isCgmVerified && (
               <span className="inline-flex items-center gap-1 rounded-full bg-mint-50 px-2 py-0.5 text-[11px] font-semibold text-mint-700 ring-1 ring-inset ring-mint-200">
-                <Activity size={11} strokeWidth={2.6} /> CGM-verified
+                <Activity size={11} strokeWidth={2.6} /> Verified buyer
               </span>
             )}
           </div>

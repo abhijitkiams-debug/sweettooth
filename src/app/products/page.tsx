@@ -1,28 +1,24 @@
 import type { Metadata } from "next";
-import { getAllProducts, getStats } from "@/lib/db/repository";
+import { getAllProducts } from "@/lib/db/repository";
 import { ProductGrid } from "@/components/product/ProductGrid";
 
 export const revalidate = 3600;
 
 export const metadata: Metadata = {
-  title: "All Low-GI & Diabetic-Friendly Products",
+  title: "Shop everything",
   description:
-    "Every product ZeroSpike has scored — filter by risk tier, category, and ZeroSpike Score. Monk fruit and stevia in, maltitol out.",
+    "Every treat on ZeroSpike — cookies, chocolate, mithai, ice cream and more. Browse by category, filter and sort your way to a new favourite.",
 };
 
 export default async function ProductsPage() {
-  const [products, stats] = await Promise.all([getAllProducts(), getStats()]);
+  const products = await getAllProducts();
 
   return (
     <div className="container-wide py-12 md:py-16">
       <header className="max-w-3xl">
         <span className="eyebrow">The whole pantry</span>
-        <h1 className="mt-4 display-sm text-ink">Snacks, sorted by how happy they&apos;ll keep you.</h1>
-        <p className="lede mt-5">
-          {stats.certified} green-light · {stats.caution} go-easy ·{" "}
-          {stats.disqualified} hard-pass. Filter, sort, and find your next
-          favourite treat.
-        </p>
+        <h1 className="mt-4 display-sm text-ink">Everything, in one happy place.</h1>
+        <p className="lede mt-5">Browse by category, or filter and sort your way to a new favourite.</p>
       </header>
 
       <div className="mt-8">

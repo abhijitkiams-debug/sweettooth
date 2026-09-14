@@ -152,3 +152,22 @@ export function geoAnswer(p: ProductWithRelations): string {
 export function geoQuestion(p: ProductWithRelations): string {
   return `Is ${p.brand} ${p.title} safe for diabetics and low-GI diets?`;
 }
+
+/**
+ * Puja — ZeroSpike's friendly taster-in-chief. Her verdict is the warm, human
+ * copy shown on the page (no clinical words), while geoAnswer/JSON-LD above
+ * carry the factual terms for search and AI overviews.
+ */
+export function pujaVerdict(p: ProductWithRelations): string {
+  if (p.riskTier === "CERTIFIED_SAFE") {
+    return `A proper yes from me. ${p.title} lands a ${p.zeroSpikeScore}/100 green light — all the treat, none of the afternoon slump. Pop it in the cart.`;
+  }
+  if (p.riskTier === "CAUTION") {
+    return `Lovely for now and then. ${p.title} scores ${p.zeroSpikeScore}/100 — enjoy it as a sometimes-treat rather than an everyday one.`;
+  }
+  return `I'd give this one a miss. ${p.title} only manages ${p.zeroSpikeScore}/100 — there are tastier picks on ZeroSpike that treat you better.`;
+}
+
+export function pujaQuestion(p: ProductWithRelations): string {
+  return `Puja, is ${p.title} worth it?`;
+}

@@ -12,7 +12,7 @@ export const revalidate = 3600;
 const STEPS = [
   { n: "01", title: "We read the teeny-tiny print", body: "Every ingredient list gets a proper read — the actual stuff inside, not the big promises on the front." },
   { n: "02", title: "We do the maths for you", body: "The sneaky spike-y bits get shown the door. Monk fruit, stevia, allulose and erythritol get the gold star." },
-  { n: "03", title: "We keep it real", body: "Real people, real glucose monitors, real receipts — so you can trust the vibe, not just the packaging." },
+  { n: "03", title: "We keep it real", body: "Real people, real reviews, real receipts — so you can trust the vibe, not just the packaging." },
 ];
 
 export default async function HomePage() {
@@ -113,9 +113,9 @@ export default async function HomePage() {
           <div className="max-w-4xl">
             <span className="eyebrow">Why we exist</span>
             <p className="mt-6 font-display text-headline font-medium leading-[1.15] text-ink">
-              “Sugar-free” has pulled some sneaky moves over the years — a little
+              Plenty of “treats” have pulled sneaky moves over the years — a little
               maltitol here, some maltodextrin there. So we made one house rule:
-              <span className="text-mint-600"> only the actual ingredients get a vote.</span>{" "}
+              <span className="text-mint-600"> only the real ingredients get a vote.</span>{" "}
               Treats should just be treats.
             </p>
           </div>
@@ -206,7 +206,7 @@ export default async function HomePage() {
         <div className="mt-10 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
           {[...CRAVINGS, ...SWEET_TYPES.slice(0, 4)].map((c) => {
             const href = CRAVINGS.includes(c) ? `/low-gi/${c.slug}` : `/diabetic-friendly/${c.slug}`;
-            const label = c.h1.replace(/^Low-GI |^Diabetic-Friendly |^Safe |^Best /, "");
+            const label = c.h1;
             return (
               <Link
                 key={c.slug}
@@ -228,10 +228,10 @@ export default async function HomePage() {
             Receipts, not promises
           </span>
           <blockquote className="mt-8 max-w-4xl font-display text-headline font-medium leading-[1.2]">
-            “Wore my Libre and stayed flat at 96 mg/dL two hours after two cookies.
-            Finally a treat that doesn&apos;t spike.”
+            “Two cookies with my evening chai and not a hint of that afternoon
+            slump. Honestly, I&apos;m obsessed.”
           </blockquote>
-          <p className="mt-6 text-cream/70">Dr. Kavya R. · CGM-verified review</p>
+          <p className="mt-6 text-cream/70">Kavya R. · verified buyer</p>
         </div>
       </section>
 

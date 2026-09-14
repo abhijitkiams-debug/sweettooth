@@ -9,7 +9,9 @@ import {
   faqJsonLd,
   breadcrumbJsonLd,
   geoAnswer,
-  geoQuestion,
+  pujaVerdict,
+  pujaQuestion,
+  tierLabel,
   productUrl,
   siteUrl,
 } from "@/lib/engine/seo";
@@ -41,7 +43,7 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const product = await getProductBySlug(params.slug);
   if (!product) return { title: "Product not found" };
-  const title = product.seoMeta?.metaTitle ?? `${product.title} — ${product.brand}`;
+  const title = `${product.title} — ${product.brand}`;
   const description = product.seoMeta?.metaDescription ?? geoAnswer(product);
   return {
     title,
@@ -53,30 +55,18 @@ export async function generateMetadata({
 
 function buildFaqs(product: Awaited<ReturnType<typeof getProductBySlug>>) {
   if (!product) return [];
-  const tierWord =
-    product.riskTier === "CERTIFIED_SAFE"
-      ? "safe for"
-      : product.riskTier === "CAUTION"
-        ? "usable with caution on"
-        : "not recommended for";
   return [
     {
-      q: `Is ${product.brand} ${product.title} safe for diabetics?`,
-      a: geoAnswer(product),
+      q: `Is ${product.title} worth adding to the cart?`,
+      a: pujaVerdict(product),
     },
     {
-      q: `How many net carbs are in ${product.title}?`,
-      a: `${product.title} has approximately ${product.netCarbsPerServe}g net carbs per serving${
-        product.glycemicIndex != null
-          ? ` and an estimated glycemic index of ${product.glycemicIndex}`
-          : ""
-      }, making it ${tierWord} low-GI and keto diets.`,
+      q: `What's inside ${product.title}?`,
+      a: `About ${product.netCarbsPerServe}g net carbs per serving, sweetened with ${product.primarySweetener.toLowerCase()}. Light on you, big on taste.`,
     },
     {
-      q: `What sweetener does ${product.title} use?`,
-      a: `Its primary sweetener is ${product.primarySweetener}.${
-        product.hasMaltitol ? " Note: it contains maltitol, which ZeroSpike flags as a spike risk." : ""
-      }`,
+      q: `How does ZeroSpike rate it?`,
+      a: `${product.title} scores ${product.zeroSpikeScore}/100 — ${tierLabel(product.riskTier).toLowerCase()}. Every score comes from reading the real ingredient list, not the front of the pack.`,
     },
   ];
 }
@@ -119,8 +109,8 @@ export default async function ProductPage({ params }: { params: { slug: string }
       {/* GEO answer block at the very top (PRD §6) */}
       <div className="mt-4">
         <GeoClaimBlock
-          question={geoQuestion(product)}
-          answer={geoAnswer(product)}
+          question={pujaQuestion(product)}
+          answer={pujaVerdict(product)}
           score={product.zeroSpikeScore}
         />
       </div>
@@ -247,7 +237,7 @@ export default async function ProductPage({ params }: { params: { slug: string }
           {product.youtubeVideos.length > 0 && (
             <section>
               <h2 className="flex items-center gap-2 font-display text-xl font-semibold text-ink">
-                <Sparkles size={18} className="text-mint-600" /> Blood-sugar test videos
+                <Sparkles size={18} className="text-mint-600" /> See it in action
               </h2>
               <div className="mt-4 grid gap-4 sm:grid-cols-2">
                 {product.youtubeVideos.map((v) => (
@@ -260,7 +250,7 @@ export default async function ProductPage({ params }: { params: { slug: string }
           {/* Reviews */}
           <section>
             <h2 className="font-display text-xl font-semibold text-ink">
-              What people (and their CGMs) say
+              What people are saying
             </h2>
             <div className="mt-4">
               <ReviewList reviews={product.reviews} />

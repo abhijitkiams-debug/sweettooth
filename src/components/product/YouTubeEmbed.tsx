@@ -49,7 +49,7 @@ export function YouTubeEmbed({ video }: { video: YT }) {
             </span>
             {video.cgmTimestamp && (
               <span className="absolute bottom-3 right-3 rounded-md bg-ink/80 px-2 py-1 text-xs font-medium text-white">
-                CGM @ {video.cgmTimestamp}
+                {video.cgmTimestamp}
               </span>
             )}
           </button>

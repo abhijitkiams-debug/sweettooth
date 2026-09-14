@@ -6,10 +6,10 @@ const COLUMNS = [
   {
     title: "Smart swaps",
     links: [
-      { href: "/low-gi/rice-alternative", label: "Rice alternatives" },
-      { href: "/low-gi/roti-alternative", label: "Roti alternatives" },
-      { href: "/low-gi/sugar-alternative", label: "Sugar alternatives" },
-      { href: "/low-gi/chocolate-alternative", label: "Sugar-free chocolate" },
+      { href: "/low-gi/rice-alternative", label: "Rice swaps" },
+      { href: "/low-gi/roti-alternative", label: "Roti swaps" },
+      { href: "/low-gi/sugar-alternative", label: "Better sweeteners" },
+      { href: "/low-gi/chocolate-alternative", label: "Chocolate" },
     ],
   },
   {
@@ -39,8 +39,8 @@ export function Footer() {
             <Link href="/" className="font-display text-3xl font-semibold tracking-tightest text-cream">
               ZeroSpike<span className="text-mint-300">.</span>
             </Link>
-            <p className="mt-4 max-w-xs text-cream/70">
-              We read the labels so you can just enjoy the snack. Sweet, sorted.
+            <p className="mt-4 max-w-xs font-display text-lg text-cream/85">
+              Sweet without the spike.
             </p>
           </div>
 

@@ -34,12 +34,12 @@ const raw: Seed[] = [
     imageUrls: [],
     categorySlug: "cookies",
     description:
-      "Bakery-style almond flour cookies studded with sugar-free dark chocolate chips. Soft in the middle, crisp at the edge, and sweetened only with monk fruit and erythritol — no maltitol, no blood-sugar drama.",
+      "Bakery-style almond flour cookies studded with dark chocolate chips. Soft in the middle, crisp at the edge, and sweetened only with monk fruit and erythritol — real treat, no mid-afternoon slump.",
     bulletPoints: [
-      "Sweetened only with monk fruit + erythritol — zero refined sugar",
+      "Sweetened only with monk fruit + erythritol",
       "Just 1.6g net carbs per cookie",
       "Almond flour + psyllium base — naturally gluten-free",
-      "CGM-tested flat glucose response",
+      "Stays lovely and steady — no crash",
     ],
     specs: [
       { label: "Net weight", value: "150 g (approx. 8 cookies)" },
@@ -47,7 +47,7 @@ const raw: Seed[] = [
       { label: "Storage", value: "Cool, dry place" },
       { label: "Manufacturer", value: "WonderNosh Foods Pvt. Ltd." },
     ],
-    tags: ["keto", "gluten-free", "monk-fruit", "high-fibre", "cgm-tested"],
+    tags: ["keto", "gluten-free", "monk-fruit", "high-fibre", "everyday"],
     ratingAvg: 4.7,
     ratingCount: 1284,
     zerospikeOffer: "Extra 10% off at WonderNosh with code ZEROSPIKE10",
@@ -87,7 +87,7 @@ const raw: Seed[] = [
         reviewerName: "Dr. Kavya R.",
         rating: 5,
         reviewText:
-          "Wore my Libre CGM and stayed flat at 96 mg/dL two hours after two cookies. Finally a treat that doesn't spike.",
+          "Two cookies with my evening chai and zero afternoon slump. Tastes just like the real deal — my whole family finished the box.",
         isCgmVerified: true,
         sentiment: "glucose_flat",
       },
@@ -107,8 +107,8 @@ const raw: Seed[] = [
         id: "yt_acc_1",
         productId: "prod_almond_choc_cookies",
         videoId: "dQw4w9WgXcQ",
-        title: "WonderNosh Almond Cookies — Blood Sugar Test (CGM)",
-        channelName: "SugarFit Reviews",
+        title: "WonderNosh Almond Cookies — Taste & Texture",
+        channelName: "Snack Lab",
         cgmTimestamp: "03:15",
       },
     ],
@@ -126,7 +126,7 @@ const raw: Seed[] = [
   {
     id: "prod_keto_roti_mix",
     slug: "lowcarb-kitchen-keto-roti-atta",
-    title: "Keto Roti Atta (Flour Mix)",
+    title: "Roti Atta",
     brand: "LowCarb Kitchen",
     rawIngredients:
       "Almond flour, coconut flour, golden flaxseed meal, psyllium husk, resistant starch type 4, sunflower seed flour, iodized salt.",
@@ -181,7 +181,7 @@ const raw: Seed[] = [
   {
     id: "prod_stevia_dark_choc",
     slug: "cacaozero-85-dark-chocolate",
-    title: "85% Dark Chocolate (No Added Sugar)",
+    title: "85% Dark Chocolate",
     brand: "CacaoZero",
     rawIngredients:
       "Cocoa mass, cocoa butter, erythritol, inulin (chicory root fiber), stevia (Reb-M), vanilla.",
@@ -248,7 +248,7 @@ const raw: Seed[] = [
         id: "yt_choc_1",
         productId: "prod_stevia_dark_choc",
         videoId: "L_jWHffIx5E",
-        title: "CacaoZero 85% — Does Stevia Chocolate Spike Blood Sugar?",
+        title: "CacaoZero 85% — The Taste Test",
         channelName: "Keto India",
         cgmTimestamp: "05:40",
       },
@@ -267,7 +267,7 @@ const raw: Seed[] = [
   {
     id: "prod_kaju_katli",
     slug: "mithaas-sugarfree-kaju-katli",
-    title: "Sugar-Free Kaju Katli",
+    title: "Kaju Katli",
     brand: "Mithaas Wellness",
     rawIngredients:
       "Cashew nuts, erythritol, monk fruit extract, ghee, cardamom, edible silver leaf (vark).",
@@ -322,7 +322,7 @@ const raw: Seed[] = [
   {
     id: "prod_peanut_butter",
     slug: "nuttyfit-unsweetened-peanut-butter",
-    title: "Unsweetened Peanut Butter (Creamy)",
+    title: "Creamy Peanut Butter",
     brand: "NuttyFit",
     rawIngredients: "Roasted peanuts (99.5%), iodized salt.",
     zeroSpikeScore: 92,
@@ -375,7 +375,7 @@ const raw: Seed[] = [
   {
     id: "prod_konjac_rice",
     slug: "slimgrain-konjac-shirataki-rice",
-    title: "Konjac Shirataki Rice",
+    title: "Shirataki Rice",
     brand: "SlimGrain",
     rawIngredients: "Water, konjac glucomannan flour, resistant starch, calcium hydroxide (firming).",
     zeroSpikeScore: 97,
@@ -537,7 +537,7 @@ const raw: Seed[] = [
   {
     id: "prod_sugarfree_rusk",
     slug: "teatime-sugarfree-rusk",
-    title: "Sugar-Free Wheat Rusk",
+    title: "Wheat Rusk",
     brand: "TeaTime",
     rawIngredients:
       "Refined wheat flour (maida), edible vegetable oil, sucralose, yeast, salt, emulsifier (E471).",
@@ -592,8 +592,8 @@ const raw: Seed[] = [
   {
     id: "prod_maltitol_choc",
     slug: "diabetreat-sugarfree-milk-chocolate",
-    title: "Sugar-Free Milk Chocolate",
-    brand: "DiabeTreat",
+    title: "Milk Chocolate",
+    brand: "Velveto",
     rawIngredients:
       "Maltitol, cocoa butter, milk solids, cocoa mass, soy lecithin, vanillin, artificial flavor.",
     zeroSpikeScore: 0,
@@ -637,8 +637,8 @@ const raw: Seed[] = [
         id: "yt_maltchoc_1",
         productId: "prod_maltitol_choc",
         videoId: "M7lc1UVf-VE",
-        title: "Why Maltitol 'Sugar-Free' Chocolate Still Spikes You",
-        channelName: "Diabetes Debunked",
+        title: "Why Maltitol Isn't the Free Pass It Seems",
+        channelName: "Label Detective",
         cgmTimestamp: "02:05",
       },
     ],
@@ -656,7 +656,7 @@ const raw: Seed[] = [
   {
     id: "prod_maltodextrin_cookies",
     slug: "fitbake-highprotein-cookies",
-    title: "High-Protein Cookies",
+    title: "Protein Cookies",
     brand: "FitBake",
     rawIngredients:
       "Oat flour, whey protein, maltodextrin, dates paste, sunflower oil, dextrose, cocoa, baking powder, salt.",
@@ -711,7 +711,7 @@ const raw: Seed[] = [
   {
     id: "prod_xylitol_mints",
     slug: "freshbreath-xylitol-mints",
-    title: "Xylitol Mints",
+    title: "Peppermint Mints",
     brand: "FreshBreath",
     rawIngredients: "Xylitol, natural peppermint oil, gum base, magnesium stearate.",
     zeroSpikeScore: 68,
@@ -764,7 +764,7 @@ const raw: Seed[] = [
   {
     id: "prod_allulose_icecream",
     slug: "frostfit-allulose-vanilla-ice-cream",
-    title: "Allulose Vanilla Bean Ice Cream",
+    title: "Vanilla Bean Ice Cream",
     brand: "FrostFit",
     rawIngredients:
       "Cream, milk, allulose, egg yolk, monk fruit extract, vanilla bean, acacia fiber, sea salt.",
@@ -873,7 +873,7 @@ const raw: Seed[] = [
   {
     id: "prod_stevia_cola",
     slug: "fizzfree-zero-sugar-cola",
-    title: "Zero Sugar Cola",
+    title: "Classic Cola",
     brand: "FizzFree",
     rawIngredients:
       "Carbonated water, natural cola flavor, stevia (Reb-M), citric acid, caffeine, caramel color.",
@@ -927,7 +927,7 @@ const raw: Seed[] = [
   {
     id: "prod_diet_iced_tea",
     slug: "chailite-sucralose-iced-tea",
-    title: "Diet Peach Iced Tea",
+    title: "Peach Iced Tea",
     brand: "ChaiLite",
     rawIngredients: "Water, brewed black tea, sucralose, natural peach flavor, citric acid, preservative (INS 211).",
     zeroSpikeScore: 66,

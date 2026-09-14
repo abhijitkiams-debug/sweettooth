@@ -43,7 +43,7 @@ export default function MethodologyPage() {
       <Section
         icon={<XCircle className="text-red-500" />}
         title="Hard pass (score 0)"
-        desc="Spot any of these and it&apos;s an instant 0 — no matter how loud the &lsquo;sugar-free&rsquo; badge shouts."
+        desc="Spot any of these and it&apos;s an instant 0 — no matter how loud the label shouts."
         items={uniqTitle(HARD_FAIL_INGREDIENTS)}
         tone="danger"
       />

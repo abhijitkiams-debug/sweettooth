@@ -27,5 +27,5 @@ export function generateMetadata({
 export default function SweetTypePage({ params }: { params: { "sweet-type": string } }) {
   const entry = getSweetType(params["sweet-type"]);
   if (!entry) notFound();
-  return <DirectoryPage entry={entry} basePath="/diabetic-friendly" crumbLabel="Diabetic-friendly" />;
+  return <DirectoryPage entry={entry} basePath="/diabetic-friendly" crumbLabel="Sweets" />;
 }

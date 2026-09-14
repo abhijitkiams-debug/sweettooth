@@ -36,22 +36,22 @@ export function GlucoseSpikeVisualizer({
 
   const label =
     tier === "CERTIFIED_SAFE"
-      ? "Flat response — minimal glucose rise"
+      ? "Nice and steady — barely a ripple"
       : tier === "CAUTION"
-        ? "Moderate rise — watch portion size"
-        : "Sharp spike — not blood-sugar friendly";
+        ? "A gentle rise — easy does it"
+        : "A proper spike — one to skip";
 
   return (
     <figure className="card p-4 sm:p-5">
       <figcaption className="mb-2 flex items-center justify-between text-xs font-medium text-ink-muted">
-        <span>Estimated glucose response (2 hrs)</span>
-        {glycemicIndex != null && <span>GI ≈ {glycemicIndex}</span>}
+        <span>The ZeroSpike curve</span>
+        <span>after a serving</span>
       </figcaption>
       <svg viewBox={`0 0 ${W} ${H}`} className="w-full" role="img" aria-label={label}>
         {/* baseline grid */}
         <line x1="8" y1={baseY} x2={W - 8} y2={baseY} stroke="#0f1b17" strokeOpacity="0.12" strokeDasharray="3 4" />
         <text x="8" y={baseY + 18} className="fill-ink-muted" fontSize="9">
-          fasting
+          before
         </text>
         {/* area under curve */}
         <motion.path

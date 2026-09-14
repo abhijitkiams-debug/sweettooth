@@ -23,5 +23,5 @@ export function generateMetadata({ params }: { params: { craving: string } }): M
 export default function CravingPage({ params }: { params: { craving: string } }) {
   const entry = getCraving(params.craving);
   if (!entry) notFound();
-  return <DirectoryPage entry={entry} basePath="/low-gi" crumbLabel="Low-GI swaps" />;
+  return <DirectoryPage entry={entry} basePath="/low-gi" crumbLabel="Swaps" />;
 }

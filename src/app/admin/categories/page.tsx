@@ -17,7 +17,7 @@ export default async function AdminCategoriesPage() {
       <p className="mt-1 max-w-2xl text-ink-soft">
         Each product&apos;s <code className="rounded bg-ink/5 px-1">categorySlug</code> decides
         which programmatic SEO pages surface it. Assign a product&apos;s category on its edit
-        form; this view shows how each category flows into the low-GI and diabetic-friendly
+        form; this view shows how each category flows into the Swaps and Sweets
         directories.
       </p>
 

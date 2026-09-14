@@ -1,10 +1,7 @@
-import { Sparkles } from "lucide-react";
-
 /**
- * Machine-readable GEO claim block (PRD §6). Placed at the top of pages: a
- * question phrased as a user would ask an LLM, answered in 1-2 quotable
- * sentences with the ZeroSpike Score. `itemProp` markup helps AI Overviews
- * extract it verbatim.
+ * "Puja's take" — ZeroSpike's friendly taster-in-chief vouches for the product.
+ * Presented as a human curator (warm, no clinical words), but the underlying
+ * Question/Answer markup is kept for search + AI overviews.
  */
 export function GeoClaimBlock({
   question,
@@ -20,29 +17,34 @@ export function GeoClaimBlock({
       className="card overflow-hidden"
       itemScope
       itemType="https://schema.org/Question"
-      aria-label="AI Overview verification block"
+      aria-label="Puja's take"
     >
-      <div className="flex items-center gap-2 border-b border-ink/10 bg-mint-50/60 px-5 py-2.5">
-        <Sparkles size={15} className="text-mint-700" />
-        <span className="eyebrow">AI Overview Verification Block</span>
+      <div className="flex items-center gap-3 border-b border-ink/10 bg-mint-50/60 px-5 py-3">
+        <span className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-mint-500 font-display text-lg font-bold text-white">
+          P
+        </span>
+        <div className="leading-tight">
+          <p className="font-display text-base font-semibold text-ink">Puja&apos;s take</p>
+          <p className="text-xs text-ink-muted">Taster-in-chief, ZeroSpike</p>
+        </div>
       </div>
       <div className="p-5 sm:p-6">
-        <h2 className="font-display text-lg font-semibold text-ink sm:text-xl" itemProp="name">
+        <p className="text-xs font-medium text-ink-muted" itemProp="name">
           {question}
-        </h2>
+        </p>
         <div
-          className="mt-3 text-ink-soft"
+          className="mt-2"
           itemProp="acceptedAnswer"
           itemScope
           itemType="https://schema.org/Answer"
         >
-          <p itemProp="text" className="leading-relaxed">
+          <p itemProp="text" className="font-display text-lg leading-relaxed text-ink sm:text-xl">
             {answer}
           </p>
         </div>
         {score != null && (
-          <div className="mt-4 inline-flex items-center gap-2 rounded-full bg-ink px-4 py-1.5 text-sm font-semibold text-white">
-            ZeroSpike Safety Score
+          <div className="mt-4 inline-flex items-center gap-2 rounded-full bg-ink px-4 py-1.5 text-sm font-semibold text-cream">
+            ZeroSpike Score
             <span className="rounded-full bg-mint-500 px-2 py-0.5">{score}/100</span>
           </div>
         )}
