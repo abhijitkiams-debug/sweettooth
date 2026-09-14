@@ -16,12 +16,12 @@ export default async function ProductsPage() {
   return (
     <div className="container-wide py-12 md:py-16">
       <header className="max-w-3xl">
-        <span className="eyebrow">The pantry</span>
-        <h1 className="mt-4 display-sm text-ink">Every food, scored against its label.</h1>
+        <span className="eyebrow">The whole pantry</span>
+        <h1 className="mt-4 display-sm text-ink">Snacks, sorted by how happy they&apos;ll keep you.</h1>
         <p className="lede mt-5">
-          {stats.certified} certified safe · {stats.caution} caution ·{" "}
-          {stats.disqualified} disqualified. Filter to find exactly what fits your
-          blood-sugar goals.
+          {stats.certified} green-light · {stats.caution} go-easy ·{" "}
+          {stats.disqualified} hard-pass. Filter, sort, and find your next
+          favourite treat.
         </p>
       </header>
 

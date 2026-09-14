@@ -6,17 +6,17 @@ const CONFIG: Record<
   { label: string; icon: typeof ShieldCheck; className: string }
 > = {
   CERTIFIED_SAFE: {
-    label: "Certified Safe",
+    label: "Green Light",
     icon: ShieldCheck,
     className: "bg-mint-50 text-mint-800 ring-mint-200",
   },
   CAUTION: {
-    label: "Caution",
+    label: "Go Easy",
     icon: AlertTriangle,
     className: "bg-amber-50 text-amber-800 ring-amber-200",
   },
   DISQUALIFIED: {
-    label: "Disqualified",
+    label: "Hard Pass",
     icon: XCircle,
     className: "bg-red-50 text-red-800 ring-red-200",
   },

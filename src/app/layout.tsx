@@ -23,11 +23,11 @@ const display = Bricolage_Grotesque({
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl()),
   title: {
-    default: "ZeroSpike — Low-GI & Diabetic-Friendly Food, Verified",
+    default: "ZeroSpike — Treats that love you back",
     template: "%s · ZeroSpike",
   },
   description:
-    "ZeroSpike scores packaged foods for blood-sugar safety. Every product is checked against its ingredient label — monk fruit and stevia in, maltitol out. CGM-verified.",
+    "A joyful pantry of low-GI, diabetic-friendly and keto treats — cookies, chocolate, mithai and more — scored against their real ingredients. Monk fruit and stevia in, maltitol out. CGM-verified.",
   keywords: [
     "low GI food",
     "diabetic friendly",
@@ -38,9 +38,9 @@ export const metadata: Metadata = {
   ],
   openGraph: {
     type: "website",
-    title: "ZeroSpike — Low-GI & Diabetic-Friendly Food, Verified",
+    title: "ZeroSpike — Treats that love you back",
     description:
-      "Ingredient-verified low-GI foods with a ZeroSpike Score. Monk fruit and stevia in, maltitol out.",
+      "All the treat, none of the sugar-crash regret. Cookies, chocolate and mithai scored against their real ingredients.",
     siteName: "ZeroSpike",
   },
   twitter: { card: "summary_large_image" },

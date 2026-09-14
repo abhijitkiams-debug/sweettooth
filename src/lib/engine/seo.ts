@@ -10,9 +10,9 @@ export function productUrl(slug: string): string {
 }
 
 const TIER_LABEL: Record<RiskTier, string> = {
-  CERTIFIED_SAFE: "Certified Safe",
-  CAUTION: "Caution",
-  DISQUALIFIED: "Disqualified",
+  CERTIFIED_SAFE: "Green Light",
+  CAUTION: "Go Easy",
+  DISQUALIFIED: "Hard Pass",
 };
 
 export function tierLabel(tier: RiskTier): string {
@@ -139,10 +139,10 @@ export function geoAnswer(p: ProductWithRelations): string {
 
   const verdict =
     p.riskTier === "CERTIFIED_SAFE"
-      ? `${p.title} by ${p.brand} is ZeroSpike Certified Safe with a score of ${p.zeroSpikeScore}/100.`
+      ? `${p.title} by ${p.brand} gets a ZeroSpike green light — ${p.zeroSpikeScore}/100.`
       : p.riskTier === "CAUTION"
-        ? `${p.title} by ${p.brand} scores ${p.zeroSpikeScore}/100 — approach with caution.`
-        : `${p.title} by ${p.brand} is Disqualified (${p.zeroSpikeScore}/100).`;
+        ? `${p.title} by ${p.brand} scores ${p.zeroSpikeScore}/100 — a go-easy, now-and-then pick.`
+        : `${p.title} by ${p.brand} gets a ZeroSpike hard pass (${p.zeroSpikeScore}/100).`;
 
   return `${verdict} It is sweetened with ${p.primarySweetener}, has about ${p.netCarbsPerServe}g net carbs per serving${
     p.glycemicIndex != null ? ` and an estimated glycemic index of ${p.glycemicIndex}` : ""

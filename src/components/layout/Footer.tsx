@@ -4,7 +4,7 @@ import { dataSource } from "@/lib/db/repository";
 
 const COLUMNS = [
   {
-    title: "Low-GI swaps",
+    title: "Smart swaps",
     links: [
       { href: "/low-gi/rice-alternative", label: "Rice alternatives" },
       { href: "/low-gi/roti-alternative", label: "Roti alternatives" },
@@ -13,7 +13,7 @@ const COLUMNS = [
     ],
   },
   {
-    title: "Diabetic-friendly",
+    title: "Sweet things",
     links: [
       { href: "/diabetic-friendly/kaju-katli", label: "Kaju katli" },
       { href: "/diabetic-friendly/cookies", label: "Cookies" },
@@ -40,7 +40,7 @@ export function Footer() {
               ZeroSpike<span className="text-mint-300">.</span>
             </Link>
             <p className="mt-4 max-w-xs text-cream/70">
-              We read every label so your blood sugar stays flat. Sweet without the spike.
+              We read the labels so you can just enjoy the snack. Sweet, sorted.
             </p>
           </div>
 

@@ -54,7 +54,7 @@ export async function DirectoryPage({
 
       {certified.length > 0 ? (
         <section className="mt-10">
-          <h2 className="display-sm text-ink">Certified-safe picks</h2>
+          <h2 className="display-sm text-ink">Green-light picks</h2>
           <div className="mt-8 grid grid-cols-2 gap-x-6 gap-y-12 lg:grid-cols-3">
             {certified.map((p) => (
               <ProductCard key={p.id} product={p} />
@@ -63,18 +63,18 @@ export async function DirectoryPage({
         </section>
       ) : (
         <p className="mt-10 rounded-xl bg-mint-50 px-4 py-6 text-center text-ink-soft">
-          We&apos;re still certifying products for this category — check back soon.
+          New green-light picks are on the way for this one — check back soon!
         </p>
       )}
 
       {cautionOrWorse.length > 0 && (
         <section className="mt-12">
           <h2 className="flex items-center gap-2.5 display-sm text-ink">
-            <XCircle size={26} className="text-danger" /> Watch out for these
+            <XCircle size={26} className="text-danger" /> Maybe save these for later
           </h2>
           <p className="mt-3 text-ink-soft">
-            These match your search but scored Caution or worse — usually a hidden
-            spike ingredient.
+            These matched your craving but landed in go-easy or hard-pass — usually
+            a sneaky ingredient backstage. Just a friendly heads-up.
           </p>
           <div className="mt-8 grid grid-cols-2 gap-x-6 gap-y-12 lg:grid-cols-3">
             {cautionOrWorse.map((p) => (

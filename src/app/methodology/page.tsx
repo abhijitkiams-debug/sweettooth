@@ -23,10 +23,11 @@ export default function MethodologyPage() {
   return (
     <div className="container-page max-w-3xl py-14 md:py-20">
       <span className="eyebrow">Transparency</span>
-      <h1 className="mt-4 display-sm text-ink">How we score</h1>
+      <h1 className="mt-4 display-sm text-ink">How the score works</h1>
       <p className="lede mt-5">
-        Every ZeroSpike Score comes from one formula applied to a product&apos;s real
-        ingredient list — not its marketing.
+        One simple formula, run over what&apos;s actually in the pack — never the
+        promises on the front. Here&apos;s exactly what earns a green light and what
+        gets a hard pass.
       </p>
 
       <div className="mt-6 rounded-2xl bg-ink px-6 py-5 text-center font-display text-xl text-white">
@@ -41,29 +42,29 @@ export default function MethodologyPage() {
 
       <Section
         icon={<XCircle className="text-red-500" />}
-        title="Instant disqualification (0 / DISQUALIFIED)"
-        desc="Any of these forces a score of 0 — the &lsquo;sugar-free&rsquo; label doesn&apos;t matter."
+        title="Hard pass (score 0)"
+        desc="Spot any of these and it&apos;s an instant 0 — no matter how loud the &lsquo;sugar-free&rsquo; badge shouts."
         items={uniqTitle(HARD_FAIL_INGREDIENTS)}
         tone="danger"
       />
       <Section
         icon={<AlertTriangle className="text-amber-500" />}
-        title="Caution (40–79)"
-        desc="Low-to-moderate impact, but enough to keep a product out of certification."
+        title="Go easy (40–79)"
+        desc="Not villains, just now-and-then stuff — fine occasionally, not a daily hero."
         items={uniqTitle(CAUTION_INGREDIENTS)}
         tone="warn"
       />
       <Section
         icon={<ShieldCheck className="text-mint-600" />}
-        title="Approved sweeteners (toward 80–100)"
-        desc="The only sweeteners that keep glucose flat."
+        title="The green-light sweeteners (80–100)"
+        desc="The good ones that keep things calm and steady."
         items={uniqTitle(APPROVED_SWEETENERS)}
         tone="ok"
       />
       <Section
         icon={<ShieldCheck className="text-mint-600" />}
-        title="Approved low-GI bases"
-        desc="Flours and fibers that replace refined starch."
+        title="The green-light bases"
+        desc="Flours and fibres that swap out refined starch — the smart foundations."
         items={uniqTitle(APPROVED_BASES)}
         tone="ok"
       />

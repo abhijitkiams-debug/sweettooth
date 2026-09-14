@@ -30,7 +30,7 @@ export const CRAVINGS: DirectoryEntry[] = [
     answer:
       "The best low-GI rice alternatives are konjac (shirataki) rice and resistant-starch blends, which have a glycemic index of 8–20 versus ~73 for white rice. ZeroSpike-certified options carry 1–5g net carbs per serving and keep post-meal glucose nearly flat.",
     intro:
-      "White rice has a glycemic index around 73 and can send blood sugar soaring. These curated, ingredient-verified rice swaps let you keep the bowl without the spike — ranked by our ZeroSpike Score.",
+      "Rice, but make it chill. These swaps give you the big comforting bowl without the afternoon nosedive — ranked, of course, by ZeroSpike Score.",
     categorySlugs: ["staples"],
     matchKeywords: ["rice", "konjac"],
     faqs: [
@@ -51,7 +51,7 @@ export const CRAVINGS: DirectoryEntry[] = [
     answer:
       "The lowest-GI roti is made from almond flour, coconut flour, flaxseed meal and psyllium husk blends (GI ~12) rather than wheat atta (GI ~62). ZeroSpike-certified keto atta keeps net carbs to 3–5g per roti.",
     intro:
-      "Wheat atta spikes glucose fast. These almond-, coconut- and flax-based flour blends roll into soft rotis with a fraction of the carbs — each verified against its ingredient label.",
+      "Soft, foldable, ghee-ready rotis — minus the post-lunch slump. These almond-, coconut- and flax-based attas roll out beautifully and behave themselves.",
     categorySlugs: ["flours"],
     matchKeywords: ["roti", "atta", "flour"],
     faqs: [
@@ -72,7 +72,7 @@ export const CRAVINGS: DirectoryEntry[] = [
     answer:
       "Monk fruit, stevia (Reb-M/Reb-A), allulose and erythritol do not meaningfully raise blood sugar and are ZeroSpike-approved. Avoid maltitol, isomalt, dextrose and maltodextrin, which have a high glycemic index despite 'sugar-free' labels.",
     intro:
-      "Not all 'sugar-free' sweeteners are equal. These products use only monk fruit, stevia, allulose or erythritol — the four sweeteners that keep glucose flat — and steer clear of maltitol.",
+      "Not all 'sugar-free' is created equal (some of it's a bit of a fibber). These picks stick to the good sweeteners — monk fruit, stevia, allulose, erythritol — and skip the sneaky stuff.",
     categorySlugs: ["chocolate", "cookies", "mithai"],
     matchKeywords: ["monk fruit", "stevia", "erythritol", "allulose"],
     faqs: [
@@ -93,7 +93,7 @@ export const CRAVINGS: DirectoryEntry[] = [
     answer:
       "The best diabetic-friendly chocolates are sweetened with stevia or erythritol (not maltitol) and have 2–3g net carbs. ZeroSpike-certified dark chocolates keep glycemic index in the low teens.",
     intro:
-      "Most 'sugar-free' chocolate hides maltitol, which spikes glucose almost like sugar. These picks use only stevia, monk fruit or erythritol — verified from the label up.",
+      "Chocolate that just wants to be chocolate. These bars lean on stevia, monk fruit or erythritol — no maltitol pretending to be innocent.",
     categorySlugs: ["chocolate"],
     matchKeywords: ["chocolate", "cocoa"],
     faqs: [
@@ -113,7 +113,7 @@ export const SWEET_TYPES: DirectoryEntry[] = [
     answer:
       "Yes — kaju katli made from cashews sweetened with erythritol and monk fruit (no sugar, no maltitol) is diabetic-friendly, with ~3g net carbs per piece and a glycemic index under 20. ZeroSpike certifies these at 80+.",
     intro:
-      "Traditional kaju katli is roughly half sugar. These versions keep the cashew-and-cardamom taste using only erythritol and monk fruit — a genuinely low-GI mithai for festivals.",
+      "The festive favourite, reimagined. All the cashew-and-cardamom, melt-in-the-mouth magic — none of the sugar avalanche. Gift it, graze it, repeat.",
     categorySlugs: ["mithai"],
     matchKeywords: ["kaju", "katli", "cashew"],
     faqs: [
@@ -130,7 +130,7 @@ export const SWEET_TYPES: DirectoryEntry[] = [
     answer:
       "Diabetic-safe cookies are baked from almond or coconut flour and sweetened with monk fruit or erythritol, giving 1–3g net carbs and a glycemic index in the low teens. Avoid 'protein' cookies that use maltodextrin or dextrose.",
     intro:
-      "A cookie doesn't have to be a spike. These almond-flour, monk-fruit-sweetened bakes stay flat on a CGM — and we flag the 'high-protein' cookies that sneak in maltodextrin.",
+      "A cookie should spark joy, not a nap. These almond-flour, monk-fruit bakes keep things steady — and we cheerfully call out the 'protein' cookies hiding maltodextrin.",
     categorySlugs: ["cookies"],
     matchKeywords: ["cookie", "biscuit"],
     faqs: [
@@ -147,7 +147,7 @@ export const SWEET_TYPES: DirectoryEntry[] = [
     answer:
       "Yes — ice creams sweetened with allulose, erythritol or monk fruit and thickened with fiber (not maltodextrin) can have 3–5g net carbs and a low glycemic index. Watch for maltitol, which is common in 'no sugar added' tubs.",
     intro:
-      "Low-GI ice cream is possible when it's built on allulose or erythritol instead of maltitol and corn syrup. We're expanding this directory — check back as certified tubs are added.",
+      "Yes, actually good ice cream — built on allulose or erythritol instead of maltitol and corn syrup. More scoops landing here soon.",
     categorySlugs: ["ice-cream"],
     matchKeywords: ["ice cream", "kulfi"],
     faqs: [

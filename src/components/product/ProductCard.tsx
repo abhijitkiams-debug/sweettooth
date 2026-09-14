@@ -8,9 +8,9 @@ const SCORE_COLOR = (tier: string) =>
   tier === "CERTIFIED_SAFE" ? "text-mint-600" : tier === "CAUTION" ? "text-caution" : "text-danger";
 
 const TIER_WORD: Record<string, string> = {
-  CERTIFIED_SAFE: "Certified",
-  CAUTION: "Caution",
-  DISQUALIFIED: "Avoid",
+  CERTIFIED_SAFE: "Green light",
+  CAUTION: "Go easy",
+  DISQUALIFIED: "Hard pass",
 };
 
 export function ProductCard({ product }: { product: ProductWithRelations }) {

@@ -10,9 +10,9 @@ import { siteUrl } from "@/lib/engine/seo";
 export const revalidate = 3600;
 
 const STEPS = [
-  { n: "01", title: "We read the label", body: "Every ingredient list is parsed by our curation engine — not the marketing on the front." },
-  { n: "02", title: "We score the spike", body: "Maltitol and maltodextrin disqualify instantly. Monk fruit, stevia, allulose and erythritol earn certification." },
-  { n: "03", title: "We prove it flat", body: "We surface real continuous-glucose-monitor readings so you can see the response, not just trust it." },
+  { n: "01", title: "We read the teeny-tiny print", body: "Every ingredient list gets a proper read — the actual stuff inside, not the big promises on the front." },
+  { n: "02", title: "We do the maths for you", body: "The sneaky spike-y bits get shown the door. Monk fruit, stevia, allulose and erythritol get the gold star." },
+  { n: "03", title: "We keep it real", body: "Real people, real glucose monitors, real receipts — so you can trust the vibe, not just the packaging." },
 ];
 
 export default async function HomePage() {
@@ -47,23 +47,23 @@ export default async function HomePage() {
       <section className="container-wide pt-14 pb-16 md:pt-20 md:pb-24">
         <div className="grid items-center gap-12 lg:grid-cols-[1.05fr_0.95fr]">
           <div className="animate-fade-up">
-            <span className="eyebrow">Low-GI living, verified</span>
+            <span className="eyebrow">Snacking, upgraded</span>
             <h1 className="mt-5 display text-ink">
-              Eat sweet.
+              Have your cake.
               <br />
-              Stay <span className="text-mint-500">flat.</span>
+              And <span className="text-mint-500">eat it.</span>
             </h1>
             <p className="lede mt-6 max-w-lg">
-              A curated pantry of diabetic-friendly and keto foods, scored against
-              their real ingredients. The treats you love — without the spike you
-              don&apos;t.
+              A joyful little pantry of cookies, chocolate, mithai and more —
+              scored against what&apos;s <em>actually</em> inside. All the treat,
+              none of the 3pm crash or the guilt.
             </p>
             <div className="mt-9 flex flex-wrap items-center gap-4">
               <Link href="/products" className="btn-primary">
-                Explore the pantry <ArrowRight size={17} />
+                Start snacking <ArrowRight size={17} />
               </Link>
               <Link href="/methodology" className="group inline-flex items-center gap-1.5 text-[0.95rem] font-medium text-ink">
-                How we score
+                How the score works
                 <span className="transition-transform group-hover:translate-x-0.5">
                   <ArrowUpRight size={16} />
                 </span>
@@ -89,7 +89,7 @@ export default async function HomePage() {
                     aspect="aspect-[3/4]"
                   />
                   <p className="mt-2.5 font-display text-lg leading-tight text-ink">{p.title}</p>
-                  <p className="text-sm text-mint-600">{p.zeroSpikeScore}/100 · certified</p>
+                  <p className="text-sm text-mint-600">{p.zeroSpikeScore}/100 · green light</p>
                 </Link>
               ))}
             </div>
@@ -100,10 +100,10 @@ export default async function HomePage() {
       {/* ───────── Stat rule ───────── */}
       <section className="rule border-b border-ink/10">
         <div className="container-wide grid grid-cols-2 divide-x divide-ink/10 py-8 md:grid-cols-4">
-          <Stat value={stats.certified} label="Certified safe" />
-          <Stat value={stats.total} label="Products scored" />
-          <Stat value={stats.categories} label="Categories" />
-          <Stat value="0" label="Maltitol allowed" />
+          <Stat value={stats.certified} label="Green-light treats" />
+          <Stat value={stats.total} label="Snacks decoded" />
+          <Stat value={stats.categories} label="Cravings covered" />
+          <Stat value="0" label="Sneaky sugars allowed" />
         </div>
       </section>
 
@@ -111,11 +111,12 @@ export default async function HomePage() {
       <section className="bg-sand">
         <div className="container-wide py-20 md:py-28">
           <div className="max-w-4xl">
-            <span className="eyebrow">Why ZeroSpike</span>
+            <span className="eyebrow">Why we exist</span>
             <p className="mt-6 font-display text-headline font-medium leading-[1.15] text-ink">
-              “Sugar-free” has been lying to us for years. Maltitol spikes. Maltodextrin
-              spikes. We built ZeroSpike so a label can&apos;t hide behind a claim —
-              <span className="text-mint-600"> only the ingredients get a vote.</span>
+              “Sugar-free” has pulled some sneaky moves over the years — a little
+              maltitol here, some maltodextrin there. So we made one house rule:
+              <span className="text-mint-600"> only the actual ingredients get a vote.</span>{" "}
+              Treats should just be treats.
             </p>
           </div>
         </div>
@@ -164,8 +165,8 @@ export default async function HomePage() {
       {/* ───────── How it works ───────── */}
       <section className="container-wide py-20 md:py-24">
         <div className="max-w-2xl">
-          <span className="eyebrow">The method</span>
-          <h2 className="mt-4 display-sm text-ink">No hype. Just the ingredient truth.</h2>
+          <span className="eyebrow">How the magic happens</span>
+          <h2 className="mt-4 display-sm text-ink">No lectures. Just the good stuff, decoded.</h2>
         </div>
         <div className="mt-12 grid gap-x-10 gap-y-12 md:grid-cols-3">
           {STEPS.map((s) => (
@@ -182,11 +183,11 @@ export default async function HomePage() {
       <section className="container-wide pb-6">
         <div className="flex items-end justify-between border-t border-ink/10 pt-10">
           <div>
-            <span className="eyebrow">The edit</span>
-            <h2 className="mt-3 display-sm text-ink">Top-scoring picks</h2>
+            <span className="eyebrow">Crowd favourites</span>
+            <h2 className="mt-3 display-sm text-ink">The ones everyone reaches for.</h2>
           </div>
           <Link href="/products" className="hidden items-center gap-1.5 text-[0.95rem] font-medium text-ink hover:text-mint-600 sm:inline-flex">
-            View all <ArrowRight size={16} />
+            See the whole pantry <ArrowRight size={16} />
           </Link>
         </div>
         <div className="mt-10 grid grid-cols-2 gap-x-6 gap-y-12 lg:grid-cols-3">
@@ -199,8 +200,8 @@ export default async function HomePage() {
       {/* ───────── Browse by craving ───────── */}
       <section className="container-wide py-20 md:py-24">
         <div className="max-w-2xl">
-          <span className="eyebrow">Find your swap</span>
-          <h2 className="mt-4 display-sm text-ink">A low-GI answer for every craving.</h2>
+          <span className="eyebrow">Craving something?</span>
+          <h2 className="mt-4 display-sm text-ink">There&apos;s a happy swap for that.</h2>
         </div>
         <div className="mt-10 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
           {[...CRAVINGS, ...SWEET_TYPES.slice(0, 4)].map((c) => {
@@ -224,7 +225,7 @@ export default async function HomePage() {
       <section className="bg-ink text-cream">
         <div className="container-wide py-20 md:py-28">
           <span className="text-[0.72rem] font-semibold uppercase tracking-[0.24em] text-mint-300">
-            Proof, on a monitor
+            Receipts, not promises
           </span>
           <blockquote className="mt-8 max-w-4xl font-display text-headline font-medium leading-[1.2]">
             “Wore my Libre and stayed flat at 96 mg/dL two hours after two cookies.
@@ -238,11 +239,12 @@ export default async function HomePage() {
       {disqualified.length > 0 && (
         <section className="container-wide py-20 md:py-24">
           <div className="max-w-2xl">
-            <span className="eyebrow !text-danger">We tell you what to avoid</span>
-            <h2 className="mt-4 display-sm text-ink">“Sugar-free” that still spikes.</h2>
+            <span className="eyebrow !text-danger">The cheeky little naughty list</span>
+            <h2 className="mt-4 display-sm text-ink">Big claims, sneaky ingredients.</h2>
             <p className="lede mt-4">
-              These popular products fail the ZeroSpike test — usually because they
-              hide maltitol or maltodextrin behind the label.
+              These crowd-pleasers didn&apos;t make the cut — usually a bit of
+              maltitol or maltodextrin hiding backstage. No shade, just a
+              friendly heads-up.
             </p>
           </div>
           <div className="mt-10 grid grid-cols-2 gap-x-6 gap-y-12 lg:grid-cols-3">
@@ -257,13 +259,13 @@ export default async function HomePage() {
       <section className="container-wide pb-24">
         <div className="rounded-3xl bg-mint-600 px-8 py-16 text-center text-cream md:py-20">
           <h2 className="display-sm mx-auto max-w-3xl !text-cream">
-            Your pantry, minus the guesswork.
+            Good stuff. Zero homework.
           </h2>
           <p className="mx-auto mt-4 max-w-xl text-cream/85">
-            Browse every certified-safe food, ranked by ZeroSpike Score.
+            Browse every green-light treat, ranked by the ZeroSpike Score.
           </p>
           <Link href="/products" className="btn mt-8 bg-cream text-ink hover:bg-paper">
-            Explore the pantry <ArrowRight size={17} />
+            Start snacking <ArrowRight size={17} />
           </Link>
         </div>
       </section>
