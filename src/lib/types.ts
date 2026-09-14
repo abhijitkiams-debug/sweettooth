@@ -53,6 +53,11 @@ export interface SeoMetadata {
   schemaJson: unknown;
 }
 
+export interface ProductSpec {
+  label: string;
+  value: string;
+}
+
 export interface Product {
   id: string;
   slug: string;
@@ -69,6 +74,16 @@ export interface Product {
   categorySlug: string;
   createdAt: Date;
   updatedAt: Date;
+
+  // Rich, auto-fetchable merchandising details (optional — populated by the
+  // admin "Fetch details" flow or filled in manually).
+  description?: string | null;
+  bulletPoints?: string[]; // "About this item"
+  specs?: ProductSpec[]; // technical details (weight, dimensions, manufacturer…)
+  tags?: string[];
+  ratingAvg?: number | null;
+  ratingCount?: number | null;
+  zerospikeOffer?: string | null; // "Special Offers by ZeroSpike"
 }
 
 // Product with all relations loaded — what detail/listing pages consume.

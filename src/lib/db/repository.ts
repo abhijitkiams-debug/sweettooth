@@ -40,11 +40,18 @@ function sortByScore(a: ProductWithRelations, b: ProductWithRelations): number {
   return b.zeroSpikeScore - a.zeroSpikeScore;
 }
 
+/** Map the DB's `specsJson` column onto the shared `specs` field. */
+function normalizeDb<T>(row: T): T {
+  const r = row as unknown as { specsJson?: unknown; specs?: unknown };
+  if (r && r.specsJson != null && r.specs == null) r.specs = r.specsJson;
+  return row;
+}
+
 export async function getAllProducts(): Promise<ProductWithRelations[]> {
   const db = await fromDb(() =>
     prisma!.product.findMany({ include: RELATION_INCLUDE, orderBy: { zeroSpikeScore: "desc" } }),
   );
-  if (db) return db as unknown as ProductWithRelations[];
+  if (db) return (db as unknown as ProductWithRelations[]).map(normalizeDb);
   return [...memoryStore()].sort(sortByScore);
 }
 
@@ -52,7 +59,7 @@ export async function getProductBySlug(slug: string): Promise<ProductWithRelatio
   const db = await fromDb(() =>
     prisma!.product.findUnique({ where: { slug }, include: RELATION_INCLUDE }),
   );
-  if (db !== null) return db as unknown as ProductWithRelations;
+  if (db !== null) return normalizeDb(db as unknown as ProductWithRelations);
   if (dataSource() === "database") return null; // DB is live but slug not found
   return memoryStore().find((p) => p.slug === slug) ?? null;
 }
@@ -61,7 +68,7 @@ export async function getProductById(id: string): Promise<ProductWithRelations |
   const db = await fromDb(() =>
     prisma!.product.findUnique({ where: { id }, include: RELATION_INCLUDE }),
   );
-  if (db !== null) return db as unknown as ProductWithRelations;
+  if (db !== null) return normalizeDb(db as unknown as ProductWithRelations);
   if (dataSource() === "database") return null;
   return memoryStore().find((p) => p.id === id) ?? null;
 }

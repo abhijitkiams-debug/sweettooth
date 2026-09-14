@@ -30,6 +30,13 @@ async function main() {
         hasMaltitol: p.hasMaltitol,
         imageUrls: p.imageUrls,
         categorySlug: p.categorySlug,
+        description: p.description ?? null,
+        bulletPoints: p.bulletPoints ?? [],
+        specsJson: (p.specs ?? []) as object,
+        tags: p.tags ?? [],
+        ratingAvg: p.ratingAvg ?? null,
+        ratingCount: p.ratingCount ?? null,
+        zerospikeOffer: p.zerospikeOffer ?? null,
         affiliateLinks: {
           create: p.affiliateLinks.map(({ id, productId, ...rest }) => rest),
         },

@@ -33,6 +33,24 @@ const raw: Seed[] = [
     hasMaltitol: false,
     imageUrls: [],
     categorySlug: "cookies",
+    description:
+      "Bakery-style almond flour cookies studded with sugar-free dark chocolate chips. Soft in the middle, crisp at the edge, and sweetened only with monk fruit and erythritol — no maltitol, no blood-sugar drama.",
+    bulletPoints: [
+      "Sweetened only with monk fruit + erythritol — zero refined sugar",
+      "Just 1.6g net carbs per cookie",
+      "Almond flour + psyllium base — naturally gluten-free",
+      "CGM-tested flat glucose response",
+    ],
+    specs: [
+      { label: "Net weight", value: "150 g (approx. 8 cookies)" },
+      { label: "Shelf life", value: "6 months" },
+      { label: "Storage", value: "Cool, dry place" },
+      { label: "Manufacturer", value: "WonderNosh Foods Pvt. Ltd." },
+    ],
+    tags: ["keto", "gluten-free", "monk-fruit", "high-fibre", "cgm-tested"],
+    ratingAvg: 4.7,
+    ratingCount: 1284,
+    zerospikeOffer: "Extra 10% off at WonderNosh with code ZEROSPIKE10",
     affiliateLinks: [
       {
         id: "al_almond_choc_amz",

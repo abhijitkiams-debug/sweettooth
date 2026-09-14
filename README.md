@@ -83,7 +83,18 @@ Add and manage products at **`/admin`** (also linked in the footer):
   curation engine scores it **live** as you type; the score/tier is **finalised
   server-side on save** (a client can't fake a "safe" score — hard-fail
   ingredients always disqualify). Set category, affiliate links (all 4 tiers),
-  images and optional SEO/GEO copy (auto-generated if left blank).
+  images, rich details (About-this-item bullets, description, specs, tags,
+  rating, ZeroSpike offer) and optional SEO/GEO copy (auto-generated if blank).
+- **Auto-fill from a link** — paste a product URL and hit **Fetch details**
+  (`POST /api/admin/fetch-product`). It detects the merchant + ASIN/pid, builds
+  the affiliate link, and extracts title, images, price, description, bullets,
+  specs, tags and rating from the page's `schema.org/Product` JSON-LD and Open
+  Graph tags. If an LLM provider is configured, it also extracts bullets/tags/
+  specs from the page text. It degrades gracefully — pages that block scraping
+  (Amazon often does) return what they can plus warnings, and you fill the rest.
+  For guaranteed Amazon data, wire a paid provider (PA-API / Rainforest) behind
+  the same endpoint. The ingredient list is never auto-filled — you paste it, so
+  scoring stays honest.
 - **`/admin/categories`** — the **category → directory-page mapping**: every
   category, its product/tier counts, and which `/low-gi/*` and
   `/diabetic-friendly/*` pages surface it. Assign a product's category on its

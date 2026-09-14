@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ChevronRight, Sparkles, AlertTriangle, ShieldCheck } from "lucide-react";
+import { ChevronRight, Sparkles, AlertTriangle, ShieldCheck, Star } from "lucide-react";
 import { getAllSlugs, getProductBySlug, getProductsByCategory } from "@/lib/db/repository";
 import { scoreIngredients } from "@/lib/engine/scoring-rules";
 import {
@@ -144,6 +144,23 @@ export default async function ProductPage({ params }: { params: { slug: string }
               <h1 className="mt-1 font-display text-headline font-semibold leading-tight text-ink">
                 {product.title}
               </h1>
+              {product.ratingAvg != null && (
+                <div className="mt-2 flex items-center gap-2 text-sm">
+                  <span className="inline-flex" aria-label={`${product.ratingAvg} out of 5`}>
+                    {[1, 2, 3, 4, 5].map((i) => (
+                      <Star
+                        key={i}
+                        size={15}
+                        className={i <= Math.round(product.ratingAvg!) ? "fill-amber-400 text-amber-400" : "text-ink/20"}
+                      />
+                    ))}
+                  </span>
+                  <span className="font-semibold text-ink">{product.ratingAvg.toFixed(1)}</span>
+                  {product.ratingCount != null && (
+                    <span className="text-ink-muted">({product.ratingCount.toLocaleString()} ratings)</span>
+                  )}
+                </div>
+              )}
               <div className="mt-4 flex items-center gap-5">
                 <ZeroSpikeScoreCard score={product.zeroSpikeScore} tier={product.riskTier} size={110} />
                 <dl className="grid grid-cols-2 gap-x-6 gap-y-3 text-sm">
@@ -161,6 +178,49 @@ export default async function ProductPage({ params }: { params: { slug: string }
             score={product.zeroSpikeScore}
             glycemicIndex={product.glycemicIndex}
           />
+
+          {/* About this item */}
+          {product.bulletPoints && product.bulletPoints.length > 0 && (
+            <section>
+              <h2 className="font-display text-xl font-semibold text-ink">About this item</h2>
+              <ul className="mt-3 space-y-2">
+                {product.bulletPoints.map((b, i) => (
+                  <li key={i} className="flex items-start gap-2 text-ink-soft">
+                    <ShieldCheck size={16} className="mt-1 shrink-0 text-mint-600" />
+                    <span>{b}</span>
+                  </li>
+                ))}
+              </ul>
+            </section>
+          )}
+
+          {/* Description */}
+          {product.description && (
+            <section>
+              <h2 className="font-display text-xl font-semibold text-ink">Description</h2>
+              <p className="mt-2 leading-relaxed text-ink-soft">{product.description}</p>
+            </section>
+          )}
+
+          {/* Specs */}
+          {product.specs && product.specs.length > 0 && (
+            <section>
+              <h2 className="font-display text-xl font-semibold text-ink">Product details</h2>
+              <dl className="mt-3 overflow-hidden rounded-2xl ring-1 ring-ink/10">
+                {product.specs.map((s, i) => (
+                  <div
+                    key={i}
+                    className={`grid grid-cols-[40%_60%] gap-3 px-4 py-2.5 text-sm ${
+                      i % 2 ? "bg-paper" : "bg-sand/40"
+                    }`}
+                  >
+                    <dt className="font-medium text-ink-soft">{s.label}</dt>
+                    <dd className="text-ink">{s.value}</dd>
+                  </div>
+                ))}
+              </dl>
+            </section>
+          )}
 
           {/* Ingredient breakdown */}
           <section>
@@ -214,11 +274,26 @@ export default async function ProductPage({ params }: { params: { slug: string }
               <FaqBlock faqs={faqs} />
             </div>
           </section>
+
+          {/* Tags */}
+          {product.tags && product.tags.length > 0 && (
+            <div className="flex flex-wrap gap-2 pt-2">
+              {product.tags.map((t) => (
+                <span key={t} className="rounded-full bg-sand px-3 py-1 text-xs font-medium text-ink-soft">
+                  #{t}
+                </span>
+              ))}
+            </div>
+          )}
         </div>
 
         {/* Sticky buy rail */}
         <aside className="lg:sticky lg:top-20 lg:self-start">
-          <AffiliateBuyBox productSlug={product.slug} links={product.affiliateLinks} />
+          <AffiliateBuyBox
+            productSlug={product.slug}
+            links={product.affiliateLinks}
+            zerospikeOffer={product.zerospikeOffer}
+          />
         </aside>
       </div>
 

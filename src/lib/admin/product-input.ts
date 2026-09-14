@@ -29,6 +29,11 @@ export const YouTubeInputSchema = z.object({
   cgmTimestamp: z.string().optional().nullable(),
 });
 
+export const SpecInputSchema = z.object({
+  label: z.string().min(1),
+  value: z.string().min(1),
+});
+
 export const ProductInputSchema = z.object({
   title: z.string().min(1, "Title is required"),
   brand: z.string().min(1, "Brand is required"),
@@ -41,6 +46,14 @@ export const ProductInputSchema = z.object({
   affiliateLinks: z.array(AffiliateLinkInputSchema).default([]),
   reviews: z.array(ReviewInputSchema).optional().default([]),
   youtubeVideos: z.array(YouTubeInputSchema).optional().default([]),
+  // Rich merchandising details (auto-fetchable).
+  description: z.string().optional().nullable(),
+  bulletPoints: z.array(z.string()).optional().default([]),
+  specs: z.array(SpecInputSchema).optional().default([]),
+  tags: z.array(z.string()).optional().default([]),
+  ratingAvg: z.coerce.number().min(0).max(5).optional().nullable(),
+  ratingCount: z.coerce.number().int().min(0).optional().nullable(),
+  zerospikeOffer: z.string().optional().nullable(),
   seo: z
     .object({
       metaTitle: z.string().optional(),
