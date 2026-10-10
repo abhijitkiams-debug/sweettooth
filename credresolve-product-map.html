@@ -2,7 +2,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap">
 <style>
-/* Layout: one hub-and-spoke diagram (Collection OS at the centre, four channel/strategy lanes around it), then a lane-by-lane module index */
+/* Layout: layered architecture, top to bottom: strategy -> Collection OS -> four execution lanes -> in-house AI foundation; then a module index */
 :root {
   --bg: #f6f7fb; --surface: #ffffff; --fg: #18203a; --muted: #5b6380; --line: #dfe2ec; --wire: #7a829e;
   --core: #18203a; --core-fg: #ffffff;
@@ -10,6 +10,8 @@
   --digi: #0f8f86; --digi-tint: #e4f5f3;
   --tele: #c46a12; --tele-tint: #fcf0e2;
   --field: #2f7d32; --field-tint: #e8f3e6;
+  --legal: #b4233c; --legal-tint: #fbe9ec;
+  --ai: #2563c9; --ai-tint: #e6eefc;
   --f-display: "Sora", "Segoe UI", system-ui, sans-serif;
   --f-body: "IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
   --f-mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
@@ -21,6 +23,8 @@
   --digi: #4fd1c5; --digi-tint: #11302f;
   --tele: #f0a356; --tele-tint: #35240f;
   --field: #7ccf7f; --field-tint: #17301a;
+  --legal: #f27a8f; --legal-tint: #3a1820;
+  --ai: #7aa8ff; --ai-tint: #172a4d;
   color-scheme: dark } }
 :root[data-theme="dark"] {
   --bg: #0f1322; --surface: #171c2f; --fg: #e8ebf5; --muted: #9aa2bf; --line: #2a3150; --wire: #8a93b3;
@@ -29,42 +33,51 @@
   --digi: #4fd1c5; --digi-tint: #11302f;
   --tele: #f0a356; --tele-tint: #35240f;
   --field: #7ccf7f; --field-tint: #17301a;
+  --legal: #f27a8f; --legal-tint: #3a1820;
+  --ai: #7aa8ff; --ai-tint: #172a4d;
   color-scheme: dark }
 
 body { background: var(--bg); color: var(--fg); font-family: var(--f-body); font-size: 15px; line-height: 1.55; }
-.wrap { max-width: 1180px; margin: 0 auto; padding-inline: 20px; padding-block: 40px 64px; display: grid; gap: 32px; }
+.wrap { max-width: 1200px; margin: 0 auto; padding-inline: 20px; padding-block: 40px 64px; display: grid; gap: 28px; }
 header { display: grid; gap: 8px; }
 .eyebrow { font-family: var(--f-mono); font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
 h1 { font-family: var(--f-display); font-weight: 700; font-size: clamp(28px, 4vw, 40px); line-height: 1.1; margin: 0; text-wrap: balance; }
-.lede { margin: 0; max-width: 68ch; color: var(--muted); }
+.lede { margin: 0; max-width: 72ch; color: var(--muted); }
 
-.diagram { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; overflow-x: auto; }
-.diagram svg { display: block; width: 100%; min-width: 880px; height: auto; }
+.diagram { margin: 0; background: var(--surface); border: 1px solid var(--line); border-radius: 14px; overflow-x: auto; }
+.diagram svg { display: block; width: 100%; min-width: 960px; height: auto; }
 
-svg .band { stroke: none; }
 svg .band-label { font-family: var(--f-mono); font-size: 12px; letter-spacing: .08em; text-transform: uppercase; font-weight: 500; }
 svg .node rect { stroke-width: 1.5; }
-svg .name { font-family: var(--f-display); font-weight: 600; font-size: 14px; fill: var(--fg); }
-svg .code { font-family: var(--f-mono); font-size: 11px; fill: var(--muted); }
+svg .hubname { font-family: var(--f-display); font-weight: 600; font-size: 15px; fill: var(--fg); }
+svg .name { font-family: var(--f-body); font-weight: 600; font-size: 13px; fill: var(--fg); }
+svg .code { font-family: var(--f-mono); font-size: 10.5px; letter-spacing: .04em; fill: var(--muted); }
 svg .wire { fill: none; stroke: var(--wire); stroke-width: 1.6; }
-svg .loop { fill: none; stroke: var(--tele); stroke-width: 1.6; stroke-dasharray: 6 5; }
-svg .arrowhead { fill: var(--wire); }
-svg .arrowhead-loop { fill: var(--tele); }
+svg .bus { fill: none; stroke: var(--wire); stroke-width: 1.4; }
+svg .dot { fill: var(--wire); }
+svg .loop { fill: none; stroke: var(--tele); stroke-width: 1.8; stroke-dasharray: 6 5; }
+svg .watch { fill: none; stroke: var(--strat); stroke-width: 1.6; stroke-dasharray: 2 4; stroke-linecap: round; }
+svg .power { fill: none; stroke: var(--ai); stroke-width: 2; }
+svg .ah { fill: var(--wire); } svg .ah-loop { fill: var(--tele); } svg .ah-watch { fill: var(--strat); } svg .ah-ai { fill: var(--ai); }
 
-.strat rect { fill: var(--strat-tint); stroke: var(--strat); } .band.strat-b { fill: var(--strat-tint); opacity: .45; } .strat-t { fill: var(--strat); }
-.digi rect { fill: var(--digi-tint); stroke: var(--digi); }   .band.digi-b { fill: var(--digi-tint); opacity: .45; }   .digi-t { fill: var(--digi); }
-.tele rect { fill: var(--tele-tint); stroke: var(--tele); }   .band.tele-b { fill: var(--tele-tint); opacity: .45; }   .tele-t { fill: var(--tele); }
-.field rect { fill: var(--field-tint); stroke: var(--field); } .band.field-b { fill: var(--field-tint); opacity: .45; } .field-t { fill: var(--field); }
+svg .band { opacity: .5; }
+.strat rect, .band.strat { fill: var(--strat-tint); } .strat rect { stroke: var(--strat); } .t-strat { fill: var(--strat); }
+.digi rect, .band.digi { fill: var(--digi-tint); } .digi rect { stroke: var(--digi); } .t-digi { fill: var(--digi); }
+.tele rect, .band.tele { fill: var(--tele-tint); } .tele rect { stroke: var(--tele); } .t-tele { fill: var(--tele); }
+.field rect, .band.field { fill: var(--field-tint); } .field rect { stroke: var(--field); } .t-field { fill: var(--field); }
+.legal rect, .band.legal { fill: var(--legal-tint); } .legal rect { stroke: var(--legal); } .t-legal { fill: var(--legal); }
+.ai rect, .band.ai { fill: var(--ai-tint); } .ai rect { stroke: var(--ai); stroke-width: 2; } .t-ai { fill: var(--ai); }
+.ai .chip { font-family: var(--f-display); font-weight: 700; font-size: 20px; fill: var(--ai); }
 .hub rect { fill: var(--core); stroke: var(--core); }
-.hub .name { fill: var(--core-fg); font-size: 18px; }
-.hub .code { fill: var(--core-fg); opacity: .75; }
+.hub .big { font-family: var(--f-display); font-weight: 700; font-size: 20px; fill: var(--core-fg); }
+.hub .sub { font-family: var(--f-mono); font-size: 11px; letter-spacing: .05em; fill: var(--core-fg); opacity: .75; }
+.badge rect { fill: var(--ai); stroke: none; } .badge text { font-family: var(--f-mono); font-size: 10px; font-weight: 500; fill: var(--surface); letter-spacing: .06em; }
 
-.legend { display: flex; flex-wrap: wrap; gap: 10px 24px; font-size: 13px; color: var(--muted); padding: 0 4px; }
+.legend { display: flex; flex-wrap: wrap; gap: 10px 26px; font-size: 13px; color: var(--muted); padding: 0 4px; }
 .legend span { display: inline-flex; align-items: center; gap: 8px; }
-.legend i { display: inline-block; width: 28px; height: 0; border-top: 2px solid var(--wire); }
-.legend i.dash { border-top: 2px dashed var(--tele); }
+.legend svg { flex: none; }
 
-.lanes { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; }
+.lanes { display: grid; grid-template-columns: repeat(auto-fit, minmax(270px, 1fr)); gap: 16px; }
 .lane { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 18px 18px 8px; min-width: 0; }
 .lane h2 { font-family: var(--f-display); font-size: 16px; font-weight: 600; margin: 0 0 4px; display: flex; align-items: center; gap: 8px; }
 .lane h2::before { content: ""; width: 10px; height: 10px; border-radius: 3px; background: var(--c); }
@@ -74,116 +87,156 @@ svg .arrowhead-loop { fill: var(--tele); }
 .lane dt { font-weight: 600; font-size: 14px; }
 .lane dt small { font-family: var(--f-mono); font-weight: 500; font-size: 11px; color: var(--c); margin-left: 6px; letter-spacing: .03em; }
 .lane dd { margin: 2px 0 0; font-size: 13.5px; color: var(--muted); }
-.lane.core { --c: var(--core); } .lane.s { --c: var(--strat); } .lane.d { --c: var(--digi); } .lane.t { --c: var(--tele); } .lane.f { --c: var(--field); }
+.lane.core { --c: var(--core); } .lane.s { --c: var(--strat); } .lane.d { --c: var(--digi); } .lane.t { --c: var(--tele); }
+.lane.f { --c: var(--field); } .lane.l { --c: var(--legal); } .lane.a { --c: var(--ai); }
 .note { font-size: 13px; color: var(--muted); margin: 0; max-width: 80ch; }
 </style>
 
 <div class="wrap">
   <header>
     <div class="eyebrow">CredResolve · Platform architecture</div>
-    <h1>One collections OS, four ways to reach a borrower</h1>
-    <p class="lede">Every module feeds Collection OS, the system of record. Aastra decides the strategy, then three execution lanes carry it out: agentic digital channels, the tele-calling floor and field collections. Drona analyses every conversation and feeds what it learns back into the bots and the dialer.</p>
+    <h1>One collections OS, four ways to resolve a loan</h1>
+    <p class="lede">Aastra sets the strategy. Collection OS, the system of record, sends allocations to four execution lanes: agentic digital channels, tele-calling, field and legal. Every outcome comes back to it. Control Tower gives a 360° view of execution, and the whole stack runs on CredResolve's own LLM, speech-to-text and text-to-speech models.</p>
   </header>
 
-  <figure class="diagram" style="margin:0">
-    <svg viewBox="0 0 1200 960" role="img" aria-labelledby="dg-title">
-      <title id="dg-title">CredResolve product map: modules grouped into Strategy, Digital and agentic, Tele-calling and Field lanes, all flowing into Collection OS</title>
+  <figure class="diagram">
+    <svg viewBox="0 0 1216 900" role="img" aria-labelledby="dg-title">
+      <title id="dg-title">CredResolve layered architecture: strategy and orchestration on top, Collection OS below it, then digital, tele-calling, field and legal lanes, all built on an in-house LLM, STT and TTS foundation</title>
       <defs>
-        <marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="arrowhead" d="M0 0 L10 5 L0 10 z"/></marker>
-        <marker id="ahl" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="arrowhead-loop" d="M0 0 L10 5 L0 10 z"/></marker>
+        <marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="ah" d="M0 0 L10 5 L0 10 z"/></marker>
+        <marker id="ahl" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="ah-loop" d="M0 0 L10 5 L0 10 z"/></marker>
+        <marker id="ahw" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="ah-watch" d="M0 0 L10 5 L0 10 z"/></marker>
+        <marker id="aha" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="ah-ai" d="M0 0 L10 5 L0 10 z"/></marker>
       </defs>
 
-      <!-- lanes -->
-      <rect class="band strat-b" x="20" y="20" width="1160" height="290" rx="14"/>
-      <text class="band-label strat-t" x="40" y="48">Strategy &amp; orchestration</text>
-      <rect class="band digi-b" x="20" y="330" width="410" height="310" rx="14"/>
-      <text class="band-label digi-t" x="40" y="358">Digital &amp; agentic channels</text>
-      <rect class="band tele-b" x="770" y="330" width="410" height="310" rx="14"/>
-      <text class="band-label tele-t" x="790" y="358">Tele-calling</text>
-      <rect class="band field-b" x="20" y="660" width="1160" height="280" rx="14"/>
-      <text class="band-label field-t" x="40" y="688">Field collections</text>
-      <text class="band-label" x="600" y="370" text-anchor="middle" fill="var(--muted)">System of record</text>
+      <!-- ===== bands ===== -->
+      <rect class="band strat" x="56" y="20" width="1136" height="212" rx="14"/>
+      <text class="band-label t-strat" x="72" y="44">Strategy &amp; orchestration</text>
 
-      <!-- wires: strategy -->
-      <path class="wire" d="M380 138 V230 H521" marker-end="url(#ah)"/>
-      <path class="wire" d="M600 138 V200" marker-end="url(#ah)"/>
-      <path class="wire" d="M820 138 V230 H679" marker-end="url(#ah)"/>
-      <path class="wire" d="M305 110 H260 V416" marker-end="url(#ah)"/>
-      <path class="wire" d="M600 258 V400" marker-end="url(#ah)"/>
+      <rect class="band digi"  x="56"  y="346" width="272" height="398" rx="14"/>
+      <rect class="band tele"  x="344" y="346" width="272" height="398" rx="14"/>
+      <rect class="band field" x="632" y="346" width="272" height="398" rx="14"/>
+      <rect class="band legal" x="920" y="346" width="272" height="398" rx="14"/>
+      <text class="band-label t-digi"  x="72"  y="372">Digital &amp; agentic</text>
+      <text class="band-label t-tele"  x="360" y="372">Tele-calling</text>
+      <text class="band-label t-field" x="648" y="372">Field</text>
+      <text class="band-label t-legal" x="936" y="372">Legal</text>
 
-      <!-- wires: digital -->
-      <path class="wire" d="M160 400 H190 V430 H213" marker-end="url(#ah)"/>
-      <path class="wire" d="M160 470 H190 V443 H213" marker-end="url(#ah)"/>
-      <path class="wire" d="M160 540 H196 V457 H213" marker-end="url(#ah)"/>
-      <path class="wire" d="M160 610 H202 V471 H213" marker-end="url(#ah)"/>
-      <path class="wire" d="M385 450 H498" marker-end="url(#ah)"/>
+      <rect class="band ai" x="56" y="772" width="1136" height="112" rx="14"/>
+      <text class="band-label t-ai" x="72" y="796">In-house AI foundation</text>
 
-      <!-- wires: tele -->
-      <path class="wire" d="M1005 450 H957" marker-end="url(#ah)"/>
-      <path class="wire" d="M805 450 H702" marker-end="url(#ah)"/>
-      <path class="wire" d="M880 552 V480" marker-end="url(#ah)"/>
+      <!-- ===== wires: strategy ===== -->
+      <path class="wire" d="M250 116 V188 H506" marker-end="url(#ah)"/>
+      <path class="wire" d="M608 116 V158" marker-end="url(#ah)"/>
+      <path class="wire" d="M966 116 V188 H710" marker-end="url(#ah)"/>
+      <path class="wire" d="M608 216 V254" marker-end="url(#ah)"/>
+      <!-- Aayudh feeds Naadh directly -->
+      <path class="wire" d="M160 88 H36 V422 H80" marker-end="url(#ah)"/>
+      <!-- Control Tower reads execution data from Collection OS -->
+      <path class="watch" d="M1150 256 V88 H1060" marker-end="url(#ahw)"/>
+      <text class="code" x="1142" y="160" text-anchor="end">execution data</text>
 
-      <!-- Drona insight loop with Naadh -->
-      <path class="loop" d="M300 486 V585 H803" marker-start="url(#ahl)" marker-end="url(#ahl)"/>
+      <!-- ===== Collection OS <-> lanes (allocations down, outcomes up) ===== -->
+      <path class="wire" d="M192 390 V332" marker-start="url(#ah)" marker-end="url(#ah)"/>
+      <path class="wire" d="M480 390 V332" marker-start="url(#ah)" marker-end="url(#ah)"/>
+      <path class="wire" d="M706 390 V332" marker-start="url(#ah)" marker-end="url(#ah)"/>
+      <path class="wire" d="M840 390 V332" marker-start="url(#ah)" marker-end="url(#ah)"/>
+      <path class="wire" d="M1056 390 V332" marker-start="url(#ah)" marker-end="url(#ah)"/>
 
-      <!-- wires: field -->
-      <path class="wire" d="M480 702 V650 H588 V500" marker-end="url(#ah)"/>
-      <path class="wire" d="M900 702 V650 H612 V500" marker-end="url(#ah)"/>
-      <path class="wire" d="M260 822 V730 H398" marker-end="url(#ah)"/>
-      <path class="wire" d="M480 828 V760" marker-end="url(#ah)"/>
-      <path class="wire" d="M700 822 V740 H562" marker-end="url(#ah)"/>
+      <!-- ===== feeder buses (spine at lane x+40) ===== -->
+      <!-- digital -->
+      <path class="bus" d="M120 505 H96 M120 559 H96 M120 613 H96 M120 667 H96 M96 667 V454" marker-end="url(#ah)"/>
+      <circle class="dot" cx="96" cy="505" r="3"/><circle class="dot" cx="96" cy="559" r="3"/><circle class="dot" cx="96" cy="613" r="3"/>
+      <!-- tele -->
+      <path class="bus" d="M408 505 H384 M408 559 H384 M384 559 V454" marker-end="url(#ah)"/>
+      <circle class="dot" cx="384" cy="505" r="3"/>
+      <!-- field -->
+      <path class="bus" d="M696 505 H672 M696 559 H672 M696 613 H672 M672 613 V454" marker-end="url(#ah)"/>
+      <circle class="dot" cx="672" cy="505" r="3"/><circle class="dot" cx="672" cy="559" r="3"/>
+      <!-- legal -->
+      <path class="bus" d="M984 505 H960 M984 559 H960 M984 613 H960 M960 613 V454" marker-end="url(#ah)"/>
+      <circle class="dot" cx="960" cy="505" r="3"/><circle class="dot" cx="960" cy="559" r="3"/>
 
-      <!-- nodes: strategy -->
-      <g class="node strat"><rect x="305" y="82" width="150" height="56" rx="10"/><text class="name" x="380" y="106" text-anchor="middle">Auto-segmentation</text><text class="code" x="380" y="124" text-anchor="middle">AAYUDH</text></g>
-      <g class="node strat"><rect x="525" y="82" width="150" height="56" rx="10"/><text class="name" x="600" y="115" text-anchor="middle">Auto-workflow</text></g>
-      <g class="node strat"><rect x="745" y="82" width="150" height="56" rx="10"/><text class="name" x="820" y="115" text-anchor="middle">Control Tower</text></g>
-      <g class="node strat"><rect x="523" y="202" width="154" height="56" rx="10"/><text class="name" x="600" y="226" text-anchor="middle">Strategy engine</text><text class="code" x="600" y="244" text-anchor="middle">AASTRA</text></g>
+      <!-- Drona <-> Naadh insight loop -->
+      <path class="loop" d="M304 422 H336 V630 H500 V584" marker-start="url(#ahl)" marker-end="url(#ahl)"/>
 
-      <!-- node: hub -->
-      <g class="node hub"><rect x="500" y="402" width="200" height="96" rx="14"/><text class="name" x="600" y="448" text-anchor="middle">Collection OS</text><text class="code" x="600" y="470" text-anchor="middle">CORE PLATFORM</text></g>
+      <!-- AI foundation powers every lane -->
+      <path class="power" d="M192 770 V748" marker-end="url(#aha)"/>
+      <path class="power" d="M480 770 V748" marker-end="url(#aha)"/>
+      <path class="power" d="M768 770 V748" marker-end="url(#aha)"/>
+      <path class="power" d="M1056 770 V748" marker-end="url(#aha)"/>
 
-      <!-- nodes: digital -->
-      <g class="node digi"><rect x="40" y="374" width="120" height="52" rx="10"/><text class="name" x="100" y="405" text-anchor="middle">Agentic Voice</text></g>
-      <g class="node digi"><rect x="40" y="444" width="120" height="52" rx="10"/><text class="name" x="100" y="475" text-anchor="middle">Web Bot</text></g>
-      <g class="node digi"><rect x="40" y="514" width="120" height="52" rx="10"/><text class="name" x="100" y="545" text-anchor="middle">WhatsApp Chat</text></g>
-      <g class="node digi"><rect x="40" y="584" width="120" height="52" rx="10"/><text class="name" x="100" y="606" text-anchor="middle">Gen AI Video</text><text class="code" x="100" y="623" text-anchor="middle">VISHWARUPA</text></g>
-      <g class="node digi"><rect x="215" y="418" width="170" height="64" rx="12"/><text class="name" x="300" y="446" text-anchor="middle">Agentic AI layer</text><text class="code" x="300" y="465" text-anchor="middle">NAADH</text></g>
+      <!-- ===== nodes: strategy ===== -->
+      <g class="node strat"><rect x="160" y="60" width="180" height="56" rx="10"/><text class="name" x="250" y="84" text-anchor="middle">Auto-segmentation</text><text class="code" x="250" y="102" text-anchor="middle">AAYUDH</text></g>
+      <g class="node strat"><rect x="518" y="60" width="180" height="56" rx="10"/><text class="name" x="608" y="93" text-anchor="middle">Auto-workflow</text></g>
+      <g class="node strat"><rect x="876" y="60" width="180" height="56" rx="10"/><text class="name" x="966" y="84" text-anchor="middle">Control Tower</text><text class="code" x="966" y="102" text-anchor="middle">360° EXECUTION INSIGHTS</text></g>
+      <g class="node strat"><rect x="508" y="160" width="200" height="56" rx="10"/><text class="hubname" x="608" y="184" text-anchor="middle">Strategy engine</text><text class="code" x="608" y="203" text-anchor="middle">AASTRA</text></g>
 
-      <!-- nodes: tele -->
-      <g class="node tele"><rect x="805" y="422" width="150" height="56" rx="10"/><text class="name" x="880" y="455" text-anchor="middle">Dialer</text></g>
-      <g class="node tele"><rect x="1005" y="422" width="150" height="56" rx="10"/><text class="name" x="1080" y="455" text-anchor="middle">Agent Assist</text></g>
-      <g class="node tele"><rect x="805" y="552" width="150" height="62" rx="10"/><text class="name" x="880" y="574" text-anchor="middle">Post-comm</text><text class="name" x="880" y="590" text-anchor="middle">Analytics</text><text class="code" x="880" y="606" text-anchor="middle">DRONA</text></g>
+      <!-- ===== Collection OS ===== -->
+      <g class="node hub"><rect x="56" y="256" width="1136" height="74" rx="14"/>
+        <text class="big" x="624" y="290" text-anchor="middle">Collection OS</text>
+        <text class="sub" x="624" y="313" text-anchor="middle">SYSTEM OF RECORD · ALLOCATIONS · DISPOSITIONS · PAYMENTS · REPORTING</text></g>
 
-      <!-- nodes: field -->
-      <g class="node field"><rect x="400" y="702" width="160" height="56" rx="10"/><text class="name" x="480" y="726" text-anchor="middle">Field App</text><text class="code" x="480" y="744" text-anchor="middle">JATAYU</text></g>
-      <g class="node field"><rect x="825" y="702" width="150" height="56" rx="10"/><text class="name" x="900" y="735" text-anchor="middle">Fleet Tower</text></g>
-      <g class="node field"><rect x="190" y="822" width="140" height="56" rx="10"/><text class="name" x="260" y="845" text-anchor="middle">Agent Assist</text><text class="code" x="260" y="863" text-anchor="middle">FIELD</text></g>
-      <g class="node field"><rect x="380" y="828" width="200" height="72" rx="10"/><text class="name" x="480" y="852" text-anchor="middle">Lead Allocation</text><text class="name" x="480" y="869" text-anchor="middle">&amp; Prioritisation</text><text class="code" x="480" y="888" text-anchor="middle">NAKHSA</text></g>
-      <g class="node field"><rect x="630" y="822" width="140" height="56" rx="10"/><text class="name" x="700" y="855" text-anchor="middle">Voice Notes</text></g>
+      <!-- ===== hubs ===== -->
+      <g class="node digi"><rect x="82" y="392" width="220" height="60" rx="12"/><text class="hubname" x="192" y="418" text-anchor="middle">Agentic AI layer</text><text class="code" x="192" y="438" text-anchor="middle">NAADH</text></g>
+      <g class="node tele"><rect x="370" y="392" width="220" height="60" rx="12"/><text class="hubname" x="480" y="427" text-anchor="middle">Dialer</text></g>
+      <g class="node field"><rect x="640" y="392" width="132" height="60" rx="12"/><text class="hubname" x="706" y="418" text-anchor="middle">Field App</text><text class="code" x="706" y="438" text-anchor="middle">JATAYU</text></g>
+      <g class="node field"><rect x="784" y="392" width="112" height="60" rx="12"/><text class="name" x="840" y="418" text-anchor="middle">Fleet Tower</text><text class="code" x="840" y="436" text-anchor="middle">SUPERVISION</text></g>
+      <g class="node legal"><rect x="946" y="392" width="220" height="60" rx="12"/><text class="hubname" x="1056" y="418" text-anchor="middle">Legal</text><text class="code" x="1056" y="438" text-anchor="middle">VAJRA</text></g>
+
+      <!-- ===== feeders: digital ===== -->
+      <g class="node digi"><rect x="120" y="484" width="192" height="42" rx="9"/><text class="name" x="136" y="510">Agentic Voice</text></g>
+      <g class="node digi"><rect x="120" y="538" width="192" height="42" rx="9"/><text class="name" x="136" y="564">Web Bot</text></g>
+      <g class="node digi"><rect x="120" y="592" width="192" height="42" rx="9"/><text class="name" x="136" y="618">WhatsApp Chat</text></g>
+      <g class="node digi"><rect x="120" y="646" width="192" height="42" rx="9"/><text class="name" x="136" y="664">Gen AI Video</text><text class="code" x="136" y="680">VISHWARUPA</text></g>
+
+      <!-- ===== feeders: tele ===== -->
+      <g class="node tele"><rect x="408" y="484" width="192" height="42" rx="9"/><text class="name" x="424" y="510">Agent Assist</text></g>
+      <g class="node tele"><rect x="408" y="538" width="192" height="44" rx="9"/><text class="name" x="424" y="556">Post-comm Analytics</text><text class="code" x="424" y="573">DRONA</text></g>
+      <text class="code" x="352" y="650" fill="var(--tele)">insights loop with Naadh</text>
+
+      <!-- ===== feeders: field ===== -->
+      <g class="node field"><rect x="696" y="484" width="192" height="42" rx="9"/><text class="name" x="712" y="502">Lead Allocation Engine</text><text class="code" x="712" y="518">NAKHSA · PRIORITISATION</text></g>
+      <g class="node field"><rect x="696" y="538" width="192" height="42" rx="9"/><text class="name" x="712" y="564">Agent Assist</text></g>
+      <g class="node field"><rect x="696" y="592" width="192" height="42" rx="9"/><text class="name" x="712" y="618">Voice Notes</text></g>
+
+      <!-- ===== feeders: legal ===== -->
+      <g class="node legal"><rect x="984" y="484" width="192" height="42" rx="9"/><text class="name" x="1000" y="510">Notice Management</text></g>
+      <g class="node legal"><rect x="984" y="538" width="192" height="42" rx="9"/><text class="name" x="1000" y="564">Litigation Management</text></g>
+      <g class="node legal"><rect x="984" y="592" width="192" height="42" rx="9"/><text class="name" x="1000" y="618">Win Rate Predictor</text></g>
+
+      <!-- ===== AI foundation ===== -->
+      <g class="badge"><rect x="232" y="784" width="78" height="18" rx="9"/><text x="271" y="797" text-anchor="middle">IN-HOUSE</text></g>
+      <g class="node ai"><rect x="304" y="812" width="200" height="60" rx="12"/><text class="chip" x="404" y="840" text-anchor="middle">LLM</text><text class="code" x="404" y="860" text-anchor="middle">LANGUAGE MODEL</text></g>
+      <g class="node ai"><rect x="524" y="812" width="200" height="60" rx="12"/><text class="chip" x="624" y="840" text-anchor="middle">STT</text><text class="code" x="624" y="860" text-anchor="middle">SPEECH-TO-TEXT</text></g>
+      <g class="node ai"><rect x="744" y="812" width="200" height="60" rx="12"/><text class="chip" x="844" y="840" text-anchor="middle">TTS</text><text class="code" x="844" y="860" text-anchor="middle">TEXT-TO-SPEECH</text></g>
     </svg>
   </figure>
 
   <div class="legend">
-    <span><i></i>Feeds into (data, actions, dispositions)</span>
-    <span><i class="dash"></i>Two-way insight loop between Drona and Naadh</span>
+    <span><svg width="34" height="10" aria-hidden="true"><line x1="0" y1="5" x2="26" y2="5" stroke="var(--wire)" stroke-width="2"/><path d="M26 1 L34 5 L26 9z" fill="var(--wire)"/></svg>Feeds into</span>
+    <span><svg width="40" height="10" aria-hidden="true"><path d="M8 1 L0 5 L8 9z" fill="var(--wire)"/><line x1="8" y1="5" x2="32" y2="5" stroke="var(--wire)" stroke-width="2"/><path d="M32 1 L40 5 L32 9z" fill="var(--wire)"/></svg>Allocations out, outcomes back</span>
+    <span><svg width="34" height="10" aria-hidden="true"><line x1="0" y1="5" x2="34" y2="5" stroke="var(--strat)" stroke-width="2" stroke-dasharray="2 4" stroke-linecap="round"/></svg>Control Tower reads execution data</span>
+    <span><svg width="34" height="10" aria-hidden="true"><line x1="0" y1="5" x2="34" y2="5" stroke="var(--tele)" stroke-width="2" stroke-dasharray="6 5"/></svg>Drona and Naadh insight loop</span>
+    <span><svg width="34" height="10" aria-hidden="true"><line x1="0" y1="5" x2="26" y2="5" stroke="var(--ai)" stroke-width="2"/><path d="M26 1 L34 5 L26 9z" fill="var(--ai)"/></svg>Powered by in-house AI</span>
   </div>
 
   <section class="lanes" aria-label="Module index">
-    <div class="lane core">
-      <h2>Core</h2>
-      <p>The single source of truth every lane writes back to.</p>
-      <dl>
-        <div><dt>Collection OS</dt><dd>Portfolios, accounts, allocations, dispositions, PTPs, payments and reporting across all channels.</dd></div>
-      </dl>
-    </div>
     <div class="lane s">
       <h2>Strategy &amp; orchestration</h2>
       <p>Decides who to contact, on which channel, when and with what treatment.</p>
       <dl>
-        <div><dt>Strategy engine <small>AASTRA</small></dt><dd>Turns segments and workflows into contact strategies and pushes them to Collection OS.</dd></div>
+        <div><dt>Strategy engine <small>AASTRA</small></dt><dd>Turns segments, workflows and execution insights into contact strategies and pushes them to Collection OS.</dd></div>
         <div><dt>Auto-segmentation <small>AAYUDH</small></dt><dd>Groups borrowers by risk and propensity to pay. Feeds Aastra and Naadh directly.</dd></div>
         <div><dt>Auto-workflow</dt><dd>Builds and runs treatment journeys without manual setup.</dd></div>
-        <div><dt>Control Tower</dt><dd>Operations view for monitoring and steering strategy performance.</dd></div>
+        <div><dt>Control Tower</dt><dd>360° execution insights and analysis across every lane, fed back into strategy.</dd></div>
+      </dl>
+    </div>
+    <div class="lane core">
+      <h2>Core</h2>
+      <p>The single source of truth every lane reads from and writes back to.</p>
+      <dl>
+        <div><dt>Collection OS</dt><dd>Portfolios, accounts, allocations, dispositions, promises to pay, payments and reporting across all channels.</dd></div>
       </dl>
     </div>
     <div class="lane d">
@@ -206,13 +259,31 @@ svg .arrowhead-loop { fill: var(--tele); }
       </dl>
     </div>
     <div class="lane f">
-      <h2>Field collections</h2>
+      <h2>Field</h2>
       <p>Doorstep visits, planned and supervised.</p>
       <dl>
         <div><dt>Field App <small>JATAYU</small></dt><dd>The field agent's app for visits, outcomes and collections.</dd></div>
-        <div><dt>Lead Allocation &amp; Prioritisation <small>NAKHSA</small></dt><dd>Dynamically assigns and orders cases for each field agent.</dd></div>
+        <div><dt>Dynamic Lead Allocation &amp; Prioritisation <small>NAKHSA</small></dt><dd>Assigns and orders cases for each field agent.</dd></div>
         <div><dt>Agent Assist · Voice Notes</dt><dd>In-app guidance and voice-captured visit notes.</dd></div>
         <div><dt>Fleet Tower</dt><dd>Live supervision of the field fleet, reporting into Collection OS.</dd></div>
+      </dl>
+    </div>
+    <div class="lane l">
+      <h2>Legal <span style="font-family:var(--f-mono);font-size:11px;color:var(--legal);font-weight:500">VAJRA</span></h2>
+      <p>Legal recovery for accounts that need it.</p>
+      <dl>
+        <div><dt>Notice Management</dt><dd>Generates, sends and tracks legal notices.</dd></div>
+        <div><dt>Litigation Management</dt><dd>Tracks cases, hearings and outcomes through the legal process.</dd></div>
+        <div><dt>Win Rate Predictor</dt><dd>Estimates the likelihood of a favourable outcome before a case is filed.</dd></div>
+      </dl>
+    </div>
+    <div class="lane a">
+      <h2>In-house AI foundation</h2>
+      <p>Built and owned by CredResolve. Every lane runs on it.</p>
+      <dl>
+        <div><dt>LLM</dt><dd>Language model behind agentic conversations, agent assist and analytics.</dd></div>
+        <div><dt>STT</dt><dd>Speech-to-text for calls, voice agents and field voice notes.</dd></div>
+        <div><dt>TTS</dt><dd>Text-to-speech for agentic voice and generated video.</dd></div>
       </dl>
     </div>
   </section>
